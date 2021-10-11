@@ -1,7 +1,7 @@
 # What The Hack - Dapr
 
 ## Introduction
-This repository contains several hands-on assignments that will introduce you to Dapr. You will start with a simple ASP.NET Core application that is composed of several microservices. In each assignment, you'll enhance the the application by adding Dapr building blocks and components. At the same time, you'll configure the application to consume Azure-based backing services. When complete, you'll have implemented the following Dapr building blocks:
+This repository contains several hands-on assignments that will introduce you to [Dapr](https://dapr.io/). You will start with a simple ASP.NET Core application that is composed of several microservices. In each assignment, you'll enhance the the application by adding Dapr building blocks and components. At the same time, you'll configure the application to consume Azure-based backing services. When complete, you'll have implemented the following Dapr building blocks:
 
 - Service invocation
 - State-management
@@ -30,7 +30,7 @@ The traffic-control application architecture consists of four microservices:
 - The **Camera Simulation** is a .NET Core console application that will simulate passing cars.
 - The **Traffic Control Service** is an ASP.NET Core WebAPI application that offers entry and exit endpoints: `/entrycam` and `/exitcam`.
 - The **Fine Collection Service** is an ASP.NET Core WebAPI application that offers 1 endpoint: `/collectfine` for collecting fines.
-- The **Vehicle Registration Service** is an ASP.NET Core WebAPI application that offers 1 endpoint: `/getvehicleinfo/{license-number}` for retrieving vehicle- and owner-information of a vehicle.
+- The **Vehicle Registration Service** is an ASP.NET Core WebAPI application that offers 1 endpoint: `/getvehicleinfo/{license-number}` for retrieving vehicle and owner information of a vehicle.
 
 These services compose together to simulate a traffic control scenario.
 
@@ -42,7 +42,7 @@ The following sequence diagram describes how the application works:
 1. The TrafficControlService stores the *VehicleState* (license plate number and entry-timestamp).
 1. After a random interval, the Camera Simulation sends a follow-up *VehicleRegistered* message to the `/exitcam` endpoint of the TrafficControlService. It contains the license plate number generated in step 1, a random exit-lane (1-3), and the exit timestamp.
 1. The TrafficControlService retrieves the previously-stored *VehicleState*.
-1. The TrafficControlService calculates the average speed of the vehicle using the entry- and exit-timestamp. It also stores the *VehicleState* with the exit timestamp for audit purposes, which is left out of the sequence diagram for clarity.
+1. The TrafficControlService calculates the average speed of the vehicle using the entry and exit timestamp. It also stores the *VehicleState* with the exit timestamp for audit purposes, which is left out of the sequence diagram for clarity.
 1. If the average speed is above the speed-limit, the TrafficControlService calls the `/collectfine` endpoint of the FineCollectionService. The request payload will be a *SpeedingViolation* containing the license plate number of the vehicle, the identifier of the road, the speeding-violation in KMh, and the timestamp of the violation.
 1. The FineCollectionService calculates the fine for the speeding-violation.
 1. The FineCollectionService calls the `/vehicleinfo/{license-number}` endpoint of the VehicleRegistrationService with the license plate number of the speeding vehicle to retrieve vehicle and owner information.
@@ -83,6 +83,24 @@ The following sequence diagram shows how the solution will work after implementi
 > [!NOTE]
 > It's helpful to refer back to the preceding sequence diagram as you progress through the workshop assignments.
 
+### Prevent port collisions
+
+For most of the assignments, you'll run the microservices in the solution on your local machine. To prevent port collisions, all services will listen on a different HTTP port. When running with Dapr, you need additional ports for HTTP and gRPC communication between the sidecar services. By default, these ports are `3500` and `50001`. However, you'll use different port numbers for each service to prevent collisions. Please closely follow the instructions so that your microservices use the following ports for their Dapr sidecars:
+
+| Service                    | Application Port | Dapr sidecar HTTP port | Dapr sidecar gRPC port |
+| -------------------------- | ---------------- | ---------------------- | ---------------------- |
+| TrafficControlService      | 6000             | 3600                   | 60000                  |
+| FineCollectionService      | 6001             | 3601                   | 60001                  |
+| VehicleRegistrationService | 6002             | 3602                   | 60002                  |
+
+Use the ports specified in the preceding table *whether* using the DIY or step-by-step approach.
+
+You'll specify the ports from the command-line when starting a service with the Dapr CLI using the following command-line arguments:
+
+- `--app-port`
+- `--dapr-http-port`
+- `--dapr-grpc-port`
+
 ## Challenges
 1. Challenge 0: **[Install tools and Azure pre-requisites](Student/Challenge-00.md)**
    - Install the pre-requisites tools and software as well as create the Azure resources required for the workshop.
@@ -107,16 +125,14 @@ The following sequence diagram shows how the solution will work after implementi
 - Git ([download](https://git-scm.com/))
 - .NET 5 SDK ([download](https://dotnet.microsoft.com/download/dotnet/5.0))
 - Visual Studio Code ([download](https://code.visualstudio.com/download)) with the following extensions installed:
-  - [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
-  - [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-  - [Install Bicep extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep))
-- Docker for desktop ([download](https://www.docker.com/products/docker-desktop))
+  - C# ([download](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp))
+  - REST Client ([download](https://marketplace.visualstudio.com/items?itemName=humao.rest-client))
+- Docker for Desktop ([download](https://www.docker.com/products/docker-desktop))
 - Dapr CLI and Dapr runtime ([instructions](https://docs.dapr.io/getting-started/install-dapr-selfhost/))
 - Install Azure CLI ([instructions]())
   - Linux ([instructions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#linux))
   - macOS ([instructions](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-macos))
   - Windows ([instructions](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli))
-- Install Azure CLI Bicep tools ([instructions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli))
 
 ## Repository Contents
 - `./Coach/Guides`
