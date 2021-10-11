@@ -50,7 +50,7 @@ The following sequence diagram describes how the application works:
 
 All actions described in the previous sequence are logged to the console during execution so you can follow the flow.
 
-The `../Student/Resources` folder in the repo contains the starting project for the workshop. It contains a version of the services that use plain HTTP communication and store state in memory. With each workshop assignment, you'll add a Dapr building block to enhance this application architecture.
+The `./Student/Resources` folder in the repo contains the starting project for the workshop. It contains a version of the services that use plain HTTP communication and store state in memory. With each workshop assignment, you'll add a Dapr building block to enhance this application architecture.
 
 > [!IMPORTANT]
 > It's important to understand that all calls between services are direct, synchronous HTTP calls using the HttpClient library in .NET Core. While sometimes necessary, this type of synchronous communication [isn't considered a best practice](https://docs.microsoft.com/dotnet/architecture/cloud-native/service-to-service-communication#requestresponse-messaging) for distributed microservice applications. When possible, you should consider decoupling microservices using asynchronous messaging. However, decoupling communication can dramatically increase the architectural and operational complexity of an application. You'll soon see how Dapr reduces the inherent complexity of distributed microservice applications.
@@ -119,9 +119,9 @@ The following sequence diagram shows how the solution will work after implementi
 - Install Azure CLI Bicep tools ([instructions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli))
 
 ## Repository Contents
-- `../Coach/Guides`
+- `./Coach/Guides`
   - Coach's Guide and related files
-- `../Student/Guides`
+- `./Student/Guides`
   - Student's Challenge Guide
 
 ## Contributors
