@@ -36,7 +36,7 @@ In this assignment, you'll install the pre-requisites tools and software as well
       - Windows ([instructions](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli))
     - Install Bicep extension for VS Code ([instructions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep))   
     - If you're running Windows, you'll need to install a **bash shell** to run some of the commands. Install either the [Git Bash](https://git-scm.com/downloads) client or the [Windows Subsystem for Linux 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
-    
+
     Make sure the following minimum software versions are installed by executing the commands in the following table:
 
     | Software             | Version | Command Line       |
@@ -67,11 +67,10 @@ Next, you'll create the Azure resources for the subsequent assignments using [Az
     ```shell
     ssh-keygen -t rsa -b 2048
     ```
-
-   - If prompted for a file name, leave the entry blank, and press enter.
-   - If prompted for a passphrase, leave the entry blank, and press enter.
+    - If prompted for a file name, leave the entry blank, and press enter.
+    - If prompted for a passphrase, leave the entry blank, and press enter.
    
-   Once complete, you'll find two SSH key files in the following directory: `%USERPROFILE%\.ssh`. Right-click on the `id_rsa` file and open with Notepad. Copy the entire contents of the file which is the public key. You'll need it to configure the parameter file in an upcoming step.
+    Once complete, you'll find two SSH key files in the following directory: `%USERPROFILE%\.ssh`. Right-click on the `id_rsa` file and open with Notepad. Copy the entire contents of the file which is the public key. You'll need it to configure the parameter file in an upcoming step.
 
 1.  In the accompanying source code, modify the `src/Infrastructure/bicep/main.parameters.json` file so it contains the proper data for the deployment:
 
