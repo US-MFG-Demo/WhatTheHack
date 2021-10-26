@@ -58,7 +58,7 @@ Keep in mind that once you remove, it's gone. You'll need to start it again with
 
 You will enhance the FineCollectionService so that it uses the Dapr SMTP output binding to send fine notice emails to those driving at excessive speeds:
 
-<img Resources="../.img/Challenge-05/output-binding-operation.png" style="padding-top: 25px;" />
+<img src="../.img/Challenge-05/output-binding-operation.png" style="padding-top: 25px;" />
 
 1.  Open the file `Resources/FineCollectionService/Controllers/CollectionController.cs` in VS Code.
 
@@ -214,7 +214,7 @@ You should see the same logs as before. You can also view the fine notification 
 1.  Wait for the first emails to come in.
 1.  Click on an email in the inbox to see its content:
 
-    <img Resources="../.img/Challenge-05/inbox.png" style="zoom:67%;padding-top: 25px;" />
+    <img src="../.img/Challenge-05/inbox.png" style="zoom:67%;padding-top: 25px;" />
 
 ## Step 5: Use an Azure Logic App to send email
 
