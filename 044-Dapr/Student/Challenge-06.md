@@ -1,3 +1,7 @@
+# Challenge 6 - Add a Dapr input binding
+
+[< Previous Challenge](./Challenge05.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge07.md)
+
 ## Introduction
 
 In this assignment, you're going to add a Dapr **input binding** in the TrafficControlService. It'll receive entry- and exit-cam messages over the MQTT protocol.
