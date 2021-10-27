@@ -387,9 +387,3 @@ Azure IoT Hub can be set up as a [MQTT queue](https://docs.microsoft.com/en-us/a
 1.  Re-run all the services.
 
 1.  Re-run the Simulation application.
-
-## Next assignment
-
-Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment.
-
-Go to [assignment 7](../Assignment07/README.md).
