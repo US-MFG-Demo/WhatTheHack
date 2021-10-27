@@ -35,6 +35,6 @@ First open the `src` folder in this repo in VS Code. Then open the [Bindings doc
 
 ## Learning Resources
 
-[Introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/)
-[Bindings chapter](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/bindings)
-[Dapr for .NET developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/)
+- [Introduction to this building block](https://docs.dapr.io/developing-applications/building-blocks/bindings/)
+- [Bindings chapter](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/bindings)
+- [Dapr for .NET developers](https://docs.microsoft.com/dotnet/architecture/dapr-for-net-developers/)
