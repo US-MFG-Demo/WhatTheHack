@@ -6,7 +6,7 @@ In this assignment, you're going to add a Dapr **input binding** in the TrafficC
 
 In this assignment you'll focus on Dapr input bindings. The following diagram depicts how input bindings work:
 
-<img src="img/input-binding.png" style="zoom: 50%;padding-top: 40px;" />
+<img src="../.img/Challenge-06/input-binding.png" style="zoom: 50%;padding-top: 40px;" />
 
 For this hands-on assignment, you will add an input binding leveraging the Dapr binding building block. In the previous assignment, you implemented a Dapr input binding. 
 
