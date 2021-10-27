@@ -23,11 +23,11 @@ This assignment targets the operation labeled as **number 5** in the end-state s
 
 **Local**
 
-<img src="./img/input-binding-operation.png" style="zoom: 67%;padding-top: 25px;" />
+<img src="../.img/Challenge-06/input-binding-operation.png" style="zoom: 67%;padding-top: 25px;" />
 
 **Azure**
 
-<img src="./img/input-binding-operation-azure.png" style="zoom: 67%;padding-top: 25px;" />
+<img src="../.img/Challenge-06/input-binding-operation-azure.png" style="zoom: 67%;padding-top: 25px;" />
 
 ### DIY instructions
 
