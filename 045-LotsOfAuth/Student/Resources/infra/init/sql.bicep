@@ -1,7 +1,7 @@
-param longName string
+param aadAdminObjectId string
 param aadAdminUsername string
-param aadAdminSid string
 param logAnalyticsWorkspaceName string
+param longName string
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsWorkspaceName
@@ -16,7 +16,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-02-01-preview' = {
       azureADOnlyAuthentication: true
       login: aadAdminUsername
       principalType: 'User'
-      sid: aadAdminSid
+      sid: aadAdminObjectId
       tenantId: subscription().tenantId
     }
   }

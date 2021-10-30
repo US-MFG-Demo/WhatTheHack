@@ -1,28 +1,11 @@
 param appInsightsName string
+param appServicePlanName string
+param functionAppName string
 param logAnalyticsWorkspaceName string
-param longName string
-param storageAccountInputContainerName string
 param storageAccountName string
-param storageAccountQueueName string
-param weatherFunctionAppName string
-param weatherProxyFunctionAppName string
-param financialProxyFunctionAppName string
-param hrSystemFunctionAppName string
-param hrSystemProxyFunctionAppName string
-param computationFunctionAppName string
-param computationProxyFunctionAppName string
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
-  name: 'asp-${longName}'
-  location: resourceGroup().location
-  kind: 'functionapp'
-  sku: {
-    name: 'Y1'
-    tier: 'Dynamic'
-  }
-  properties: {
-    reserved: true
-  }
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
+  name: appServicePlanName
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' existing = {
@@ -33,8 +16,8 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: appInsightsName
 }
 
-resource weatherFunctionApp 'Microsoft.Web/sites@2021-01-15' = {
-  name: weatherFunctionAppName
+resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
+  name: functionAppName
   location: resourceGroup().location
   kind: 'functionapp,linux'
   identity: {
@@ -60,29 +43,57 @@ resource weatherFunctionApp 'Microsoft.Web/sites@2021-01-15' = {
           value: appInsights.properties.InstrumentationKey
         }
         {
-          name: 'AZURE_STORAGE_INPUT_BLOB_CONTAINER_NAME'
-          value: storageAccountInputContainerName
-        }
-        {
-          name: 'AZURE_STORAGE_QUEUE_NAME'
-          value: storageAccountQueueName
-        }
-        {
           name: 'FUNCTIONS_EXTENSION_VERSION'
           value: '~3'
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'python'
-        }
-        {
-          name: 'WEBSITE_RUN_FROM_PACKAGE'
-          value: '1'
+          value: 'dotnet'
         }
       ]
     }
   }
 }
+
+resource functionAppCors 'Microsoft.Web/sites/config@2021-02-01' = {
+  name: '${functionApp.name}/web'
+  properties: {
+    cors: {
+      allowedOrigins: [
+        '*'
+      ]
+    }
+  }
+}
+
+// resource functionAppCorsAuthentication 'Microsoft.Web/sites/config@2021-02-01' = {
+//   name: '${functionAppCors.name}/authsettingsV2'
+//   properties: {
+//     globalValidation: {
+//       requireAuthentication: true
+//       unauthenticatedClientAction: 'RedirectToLoginPage'
+//     }
+//     identityProviders: {
+//       azureActiveDirectory: {
+//         registration: {
+//           clientId: functionAppCorsClientId
+//           clientSecretSettingName: functionAppCorsClientSecretConfigurationName
+//           openIdIssuer: 'https://login.microsoftonline.com/${subscription().tenantId}'
+//         }
+//         validation: {
+//           allowedAudiences: [
+//             'api://${functionAppCorsClientId}'
+//           ]
+//         }
+//       }
+//       login: {
+//         tokenStore: {
+//           enable: true
+//         }
+//       }
+//     }
+//   }
+// }
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsWorkspaceName
@@ -90,7 +101,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
 
 resource functionAppDiagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
   name: 'Logging'
-  scope: weatherFunctionApp
+  scope: functionApp
   properties: {
     workspaceId: logAnalyticsWorkspace.id
     logs: [
@@ -107,4 +118,3 @@ resource functionAppDiagnosticSettings 'Microsoft.Insights/diagnosticSettings@20
     ]
   }
 }
-

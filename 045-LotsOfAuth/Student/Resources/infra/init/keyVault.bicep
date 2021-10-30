@@ -1,15 +1,26 @@
+param adminAppServiceName string
+param computationFunctionAppName string
+param computationProxyFunctionAppName string
+param financialAppServiceName string
+param financialProxyFunctionAppName string
+param hrSystemFunctionAppName string
+param hrSystemProxyFunctionAppName string
 param logAnalyticsWorkspaceName string
 param longName string
+param proxyFunctionAppName string
 param subscriptionKeyName string
 @secure()
 param subscriptionKeyValue string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
-param financialProxyFunctionAppName string
-param hrSystemFunctionAppName string
-param hrSystemProxyFunctionAppName string
-param computationFunctionAppName string
-param computationProxyFunctionAppName string
+
+resource adminAppService 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: adminAppServiceName
+}
+
+resource financialAppService 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: financialAppServiceName
+}
 
 resource weatherFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
   name: weatherFunctionAppName
@@ -37,6 +48,10 @@ resource computationFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
 
 resource computationProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
   name: computationProxyFunctionAppName
+}
+
+resource proxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: proxyFunctionAppName
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
@@ -120,16 +135,46 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           ]
         }
       }
+      {
+        tenantId: subscription().tenantId
+        objectId: adminAppService.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'set'
+          ]
+        }
+      }
+      {
+        tenantId: subscription().tenantId
+        objectId: financialAppService.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'set'
+          ]
+        }
+      }
+      {
+        tenantId: subscription().tenantId
+        objectId: proxyFunctionApp.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'set'
+          ]
+        }
+      }
     ]
   }  
 }
 
-resource keyVaultSubscriptionKeySecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
-  name: '${keyVault.name}/${subscriptionKeyName}'
-  properties: {
-    value: subscriptionKeyValue
-  }  
-}
+// resource keyVaultSubscriptionKeySecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
+//   name: '${keyVault.name}/${subscriptionKeyName}'
+//   properties: {
+//     value: subscriptionKeyValue
+//   }  
+// }
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsWorkspaceName

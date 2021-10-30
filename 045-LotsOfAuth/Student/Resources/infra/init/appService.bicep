@@ -1,6 +1,7 @@
-param longName string
-param logAnalyticsWorkspaceName string
 param appInsightsName string
+param appServiceName string
+param appServicePlanName string
+param logAnalyticsWorkspaceName string
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: appInsightsName
@@ -10,22 +11,12 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
   name: logAnalyticsWorkspaceName
 }
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
-  name: 'asp-${longName}'
-  location: resourceGroup().location
-  properties: {
-  }
-  sku: {
-    name: 'F1'
-    tier: 'Free'
-    size: 'F1'
-    family: 'F'
-    capacity: 1
-  }
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
+  name: appServicePlanName
 }
 
 resource appService 'Microsoft.Web/sites@2020-12-01' = {
-  name: 'app-${longName}'
+  name: appServiceName
   location: resourceGroup().location
   properties: {
     enabled: true
@@ -96,5 +87,4 @@ resource appDiagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01
   }
 }
 
-output appServicePlanName string = appServicePlan.name
 output appServiceName string = appService.name
