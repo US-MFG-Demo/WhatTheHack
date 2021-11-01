@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json.schemastore.org/proxies",
+  "proxies": {
+    "computation": {
+      "matchCondition": {
+        "route": "computation"
+      },
+      "backendUri": "https://%COMPUTATION_PROXY_URL%.azurewebsites.net/api"
+    },
+    "financial": {
+      "matchCondition": {
+        "route": "financial"
+      },
+      "backendUri": "https://%FINANCIAL_PROXY_URL%.azurewebsites.net/api"
+    },
+    "hr": {
+      "matchCondition": {
+        "route": "hr"
+      },
+      "backendUri": "https://%HR_SYSTEM_PROXY_URL%.azurewebsites.net/api"
+    },
+    "weather": {
+      "matchCondition": {
+        "route": "weather"
+      },
+      "backendUri": "https://%WEATHER_PROXY_URL%.azurewebsites.net/api"
+    }
+  }
+}
