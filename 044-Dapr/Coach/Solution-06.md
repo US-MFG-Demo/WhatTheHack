@@ -22,9 +22,9 @@ And you're done! That's right, you don't need to change anything in order to use
 
 You'll use [Mosquitto](https://mosquitto.org/), a lightweight MQTT broker, as the MQTT broker between the Simulation and TrafficControlService. You'll run Mosquitto from a Docker container.
 
-In order to connect to Mosquitto, you need to pass in a custom configuration file when starting it. With Docker, you can pass a configuration file when starting a container using a *Volume mount*. The folder `src/Infrastructure/mosquitto` already contains a config file you can use.
+In order to connect to Mosquitto, you need to pass in a custom configuration file when starting it. With Docker, you can pass a configuration file when starting a container using a *Volume mount*. The folder `Resources/Infrastructure/mosquitto` already contains a config file you can use.
 
-1.  Open the terminal window in VS Code and make sure the current folder is `src/Infrastructure/mosquitto`.
+1.  Open the terminal window in VS Code and make sure the current folder is `Resources/Infrastructure/mosquitto`.
 
 1.  Start a Mosquitto MQTT container by entering the following command:
     **When running on Windows**:
