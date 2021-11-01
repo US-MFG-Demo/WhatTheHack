@@ -18,6 +18,7 @@ var hrSystemProxyFunctionAppName = 'func-hrSystemProxy-${longName}'
 var computationFunctionAppName = 'func-computation-${longName}'
 var computationProxyFunctionAppName = 'func-computationProxy-${longName}'
 var proxyFunctionAppName = 'func-proxy-${longName}'
+var keyVaultName = 'kv-${longName}'
 
 module loggingDeployment 'logging.bicep' = {
   name: 'loggingDeployment'
@@ -69,9 +70,11 @@ module functionDeployment 'funcs.bicep' = {
     financialProxyFunctionAppName: financialProxyFunctionAppName
     hrSystemFunctionAppName: hrSystemFunctionAppName
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
+    keyVaultName: keyVaultName
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     proxyFunctionAppName: proxyFunctionAppName
     storageAccountName: storageDeployment.outputs.storageAccountName
+    subscriptionKeyName: subscriptionKeyName
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
   }
@@ -113,12 +116,21 @@ module keyVaultDeployment 'keyVault.bicep' = {
     hrSystemFunctionAppName: hrSystemFunctionAppName
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
-    longName: longName
+    keyVaultName: keyVaultName
     proxyFunctionAppName: proxyFunctionAppName  
     subscriptionKeyName: subscriptionKeyName
     subscriptionKeyValue: subscriptionKeyValue
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
+  }
+}
+
+module weatherFunctionAppKeyDeployment 'func-weather-key.bicep' = {
+  name: 'weatherFunctionAppKeyDeployment'
+  params: {
+    functionAppName: weatherFunctionAppName
+    keyVaultName: keyVaultDeployment.outputs.keyVaultName
+    subscriptionKeyValue: subscriptionKeyValue
   }
 }
 

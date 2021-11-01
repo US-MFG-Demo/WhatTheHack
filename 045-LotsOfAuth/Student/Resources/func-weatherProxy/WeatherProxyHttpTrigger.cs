@@ -7,29 +7,32 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace func_weatherProxy
 {
+  public class WeatherDayData
+  {
+    public DateTime Date { get; set; }
+    public int Temperature { get; set; }
+
+    public int Windspeed { get; set; }
+
+    public int Humidity { get; set; }
+  }
     public static class WeatherProxyHttpTrigger
     {
-        [FunctionName("WeatherProxyHttpTrigger")]
+        private static HttpClient httpClient = new HttpClient();
+        [FunctionName("weather")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var response = await httpClient.GetFromJsonAsync<WeatherDayData>(
+              $"{Environment.GetEnvironmentVariable("WEATHER_API_URL")}/api/weather?code={Environment.GetEnvironmentVariable("WEATHER_API_SUBSCRIPTION_KEY")}");
 
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(response);
         }
     }
 }

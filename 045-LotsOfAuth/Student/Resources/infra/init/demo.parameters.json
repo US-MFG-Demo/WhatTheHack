@@ -18,10 +18,7 @@
       "value": "jordanbean@microsoft.com"
     },
     "subscriptionKeyName": {
-      "value": "SUBSCRIPTION_KEY"
-    },
-    "subscriptionKeyValue": {
-      "value": ""
+      "value": "subscriptionKey"
     }
   }
 }

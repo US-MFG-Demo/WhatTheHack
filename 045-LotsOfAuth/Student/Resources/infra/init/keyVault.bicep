@@ -6,7 +6,7 @@ param financialProxyFunctionAppName string
 param hrSystemFunctionAppName string
 param hrSystemProxyFunctionAppName string
 param logAnalyticsWorkspaceName string
-param longName string
+param keyVaultName string
 param proxyFunctionAppName string
 param subscriptionKeyName string
 @secure()
@@ -55,7 +55,7 @@ resource proxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
-  name: 'kv-${longName}'
+  name: keyVaultName
   location: resourceGroup().location
   properties: {
     sku: {
@@ -64,6 +64,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
     }
     tenantId: subscription().tenantId
     enableRbacAuthorization: false
+    enabledForDeployment: true
     accessPolicies: [
       {
         tenantId: subscription().tenantId
@@ -71,7 +72,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       }
@@ -81,7 +82,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       } 
@@ -91,7 +92,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       } 
@@ -101,7 +102,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       } 
@@ -111,7 +112,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       } 
@@ -121,7 +122,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       } 
@@ -131,7 +132,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       }
@@ -141,7 +142,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       }
@@ -151,7 +152,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       }
@@ -161,7 +162,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         permissions: {
           secrets: [
             'get'
-            'set'
+            'list'
           ]
         }
       }
@@ -169,12 +170,12 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   }  
 }
 
-// resource keyVaultSubscriptionKeySecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
-//   name: '${keyVault.name}/${subscriptionKeyName}'
-//   properties: {
-//     value: subscriptionKeyValue
-//   }  
-// }
+resource keyVaultSubscriptionKeySecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
+  name: '${keyVault.name}/${subscriptionKeyName}'
+  properties: {
+    value: subscriptionKeyValue
+  }
+}
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsWorkspaceName

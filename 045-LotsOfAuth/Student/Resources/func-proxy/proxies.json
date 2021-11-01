@@ -5,25 +5,25 @@
       "matchCondition": {
         "route": "computation"
       },
-      "backendUri": "https://%COMPUTATION_PROXY_URL%.azurewebsites.net/api"
+      "backendUri": "https://%COMPUTATION_PROXY_URL%/api"
     },
     "financial": {
       "matchCondition": {
         "route": "financial"
       },
-      "backendUri": "https://%FINANCIAL_PROXY_URL%.azurewebsites.net/api"
+      "backendUri": "https://%FINANCIAL_PROXY_URL%/api"
     },
     "hr": {
       "matchCondition": {
         "route": "hr"
       },
-      "backendUri": "https://%HR_SYSTEM_PROXY_URL%.azurewebsites.net/api"
+      "backendUri": "https://%HR_SYSTEM_PROXY_URL%/api"
     },
     "weather": {
       "matchCondition": {
         "route": "weather"
       },
-      "backendUri": "https://%WEATHER_PROXY_URL%.azurewebsites.net/api"
+      "backendUri": "https://%WEATHER_PROXY_URL%/api"
     }
   }
 }

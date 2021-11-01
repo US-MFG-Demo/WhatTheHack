@@ -5,15 +5,15 @@ param computationProxyFunctionAppName string
 param financialProxyFunctionAppName string
 param hrSystemFunctionAppName string
 param hrSystemProxyFunctionAppName string
+param keyVaultName string
 param logAnalyticsWorkspaceName string
 param proxyFunctionAppName string
 param storageAccountName string
+param subscriptionKeyName string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
 
 var functionAppNames = [
-  weatherFunctionAppName
-  weatherProxyFunctionAppName
   financialProxyFunctionAppName
   hrSystemFunctionAppName
   hrSystemProxyFunctionAppName
@@ -31,6 +31,35 @@ module funcDeployment 'func.bicep' = [for functionAppName in functionAppNames: {
     storageAccountName: storageAccountName
   }
 }]
+
+module funcWeatherDeployment 'func-weather.bicep' = {
+  name: '${weatherFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName
+    functionAppName: weatherFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+  }
+}
+
+module funcWeatherProxyDeployment 'func-weather-proxy.bicep' = {
+  name: '${weatherProxyFunctionAppName}Deployment'
+  dependsOn: [
+    funcWeatherDeployment
+  ]
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName
+    functionAppName: weatherProxyFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+    subscriptionKeyName: subscriptionKeyName
+    weatherFunctionAppName: weatherFunctionAppName
+  }
+}
 
 module funcProxyDeployment 'func-proxy.bicep' = {
   name: 'funcProxyDeployment'
