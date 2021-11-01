@@ -12,7 +12,7 @@ You will add code to the TrafficControlService to leverage a Dapr input binding 
 
 Start by inspecting vehicle entry and exit methods:
 
-1.  Open the file `src/TrafficControlService/Controllers/TrafficController.cs` in VS Code.
+1.  Open the file `Resources/TrafficControlService/Controllers/TrafficController.cs` in VS Code.
 
 1.  Inspect the `VehicleEntry` and `VehicleExit` methods.
 
@@ -69,9 +69,9 @@ docker rm dtc-mosquitto -f
 
 Keep in mind that once you remove, it's gone. You'll need to start it again with the `docker run` command shown at the beginning of this step.
 
-> For your convenience, the `src/Infrastructure` folder contains Powershell scripts for starting the infrastructural components you'll use throughout the workshop. You can use the `src/Infrastructure/maildev/start-maildev.ps1` script to start the MailDev container.
+> For your convenience, the `Resources/Infrastructure` folder contains Powershell scripts for starting the infrastructural components you'll use throughout the workshop. You can use the `Resources/Infrastructure/maildev/start-maildev.ps1` script to start the MailDev container.
 >
-> You can also start all the infrastructural containers at once (also for assignments to come) with the `src/Infrastructure/start-all.ps1` script.
+> You can also start all the infrastructural containers at once (also for assignments to come) with the `Resources/Infrastructure/start-all.ps1` script.
 
 ## Step 3: Configure the input binding
 
@@ -79,7 +79,7 @@ In this step you will add two Dapr binding component configuration files to the 
 
 First, create an input binding for the `/entrycam` operation:
 
-1.  Add a new file in the `src/dapr/components` folder named `entrycam.yaml`.
+1.  Add a new file in the `Resources/dapr/components` folder named `entrycam.yaml`.
 
 1.  Open the file in VS Code.
 
@@ -109,7 +109,7 @@ It's important to note the `name` of the binding. This name must be the same as 
 
 Next, create an input binding for the `/exitcam` operation:
 
-1.  Add a new file in the `src/dapr/components` folder named `exitcam.yaml`.
+1.  Add a new file in the `Resources/dapr/components` folder named `exitcam.yaml`.
 
 1.  Open this file in VS Code.
 
@@ -139,7 +139,7 @@ Now with input bindings configured, it's time to change the Camera Simulation so
 
 In this step, you'll change the Camera Simulation so it sends MQTT messages instead of HTTP requests:
 
-1.  Open the terminal window in VS Code and make sure the current folder is `src/Simulation`.
+1.  Open the terminal window in VS Code and make sure the current folder is `Resources/Simulation`.
 
 1.  Add a reference to the `System.Net.Mqtt` library:
 
@@ -147,17 +147,17 @@ In this step, you'll change the Camera Simulation so it sends MQTT messages inst
     dotnet add package System.Net.Mqtt --prerelease
     ```
 
-1.  Open the file `src/Simulation/CameraSimulation.cs` file in VS Code.
+1.  Open the file `Resources/Simulation/CameraSimulation.cs` file in VS Code.
 
 1.  Inspect the code in this file.
 
 As you can see, the simulation receives an `ITrafficControlService` instance injected into its constructor. The simulation uses this proxy (i.e., helper class) to send entry- and exit-cam messages to the TrafficControlService.
 
-1.  Open the file `src/Simulation/Proxies/HttpTrafficControlService.cs` in VS Code and inspect the code.
+1.  Open the file `Resources/Simulation/Proxies/HttpTrafficControlService.cs` in VS Code and inspect the code.
 
 The proxy uses HTTP to send the message to the TrafficControlService. You will replace this now with an implementation that uses MQTT:
 
-1.  Add a new file in the `src/Simulation/Proxies` folder named `MqttTrafficControlService.cs`.
+1.  Add a new file in the `Resources/Simulation/Proxies` folder named `MqttTrafficControlService.cs`.
 
 1.  Paste the following code into this file:
 
@@ -206,7 +206,7 @@ It now uses the `System.Net.Mqtt` library to connect and send messages to the MQ
 
 It's time to wire up the new MQTT proxy to the Simulation service and remove the older HTTP implementation:
 
-1.  Open the file `src/Simulation/Program.cs` in VS Code.
+1.  Open the file `Resources/Simulation/Program.cs` in VS Code.
 
 1.  Remove the first line of the `Main` method where an instance of the `HttpClient` instance is created.
 
@@ -216,7 +216,7 @@ It's time to wire up the new MQTT proxy to the Simulation service and remove the
     var trafficControlService = new MqttTrafficControlService(camNumber);
     ```
 
-1.  Open the terminal window in VS Code and make sure the current folder is `src/Simulation`.
+1.  Open the terminal window in VS Code and make sure the current folder is `Resources/Simulation`.
 
 1.  Check all your code changes are correct by building the code. Execute the following command in the terminal window:
 
@@ -234,9 +234,9 @@ You're going to start all the services now. You specify the custom components fo
 
 1.  Make sure no services from previous tests are running (close the terminal windows).
 
-1.  Make sure all the Docker containers introduced in the previous assignments are running (you can use the `src/Infrastructure/start-all.ps1` script to start them).
+1.  Make sure all the Docker containers introduced in the previous assignments are running (you can use the `Resources/Infrastructure/start-all.ps1` script to start them).
 
-1.  Open the a **new** terminal window in VS Code and make sure the current folder is `src/VehicleRegistrationService`.
+1.  Open the a **new** terminal window in VS Code and make sure the current folder is `Resources/VehicleRegistrationService`.
 
 1.  Enter the following command to run the VehicleRegistrationService with a Dapr sidecar:
 
@@ -244,7 +244,7 @@ You're going to start all the services now. You specify the custom components fo
     dapr run --app-id vehicleregistrationservice --app-port 6002 --dapr-http-port 3602 --dapr-grpc-port 60002 --components-path ../dapr/components dotnet run
     ```
 
-1.  Open a **second** new terminal window in VS Code and change the current folder to `src/FineCollectionService`.
+1.  Open a **second** new terminal window in VS Code and change the current folder to `Resources/FineCollectionService`.
 
 1.  Enter the following command to run the FineCollectionService with a Dapr sidecar:
 
@@ -252,7 +252,7 @@ You're going to start all the services now. You specify the custom components fo
     dapr run --app-id finecollectionservice --app-port 6001 --dapr-http-port 3601 --dapr-grpc-port 60001 --components-path ../dapr/components dotnet run
     ```
 
-1.  Open a **third** new terminal window in VS Code and change the current folder to `src/TrafficControlService`.
+1.  Open a **third** new terminal window in VS Code and change the current folder to `Resources/TrafficControlService`.
 
 1.  Enter the following command to run the TrafficControlService with a Dapr sidecar:
 
@@ -260,7 +260,7 @@ You're going to start all the services now. You specify the custom components fo
     dapr run --app-id trafficcontrolservice --app-port 6000 --dapr-http-port 3600 --dapr-grpc-port 60000 --components-path ../dapr/components dotnet run
     ```
 
-1.  Open a **fourth** new terminal window in VS Code and change the current folder to `src/Simulation`.
+1.  Open a **fourth** new terminal window in VS Code and change the current folder to `Resources/Simulation`.
 
 1.  Start the simulation:
 
@@ -301,13 +301,13 @@ Azure IoT Hub can be set up as a [MQTT queue](https://docs.microsoft.com/en-us/a
     az iot hub device-identity connection-string show --device-id simulation --hub-name <iot-hub-name>
     ```
 
-1.  Add the NuGet package Microsoft.Azure.Devices.Client to the Simulation (`src/Simulation` directory) project.
+1.  Add the NuGet package Microsoft.Azure.Devices.Client to the Simulation (`Resources/Simulation` directory) project.
 
     ```shell
     dotnet add package Microsoft.Azure.Devices.Client
     ```
 
-1.  Replace the implementation of the `src/Simulation/Proxies/MqttTrafficControlService.cs` class with similar code to below.  
+1.  Replace the implementation of the `Resources/Simulation/Proxies/MqttTrafficControlService.cs` class with similar code to below.  
 
     ```csharp
     using Microsoft.Azure.Devices.Client;
@@ -359,7 +359,7 @@ Azure IoT Hub can be set up as a [MQTT queue](https://docs.microsoft.com/en-us/a
     az storage account keys list --account-name <storage-account-name> --resource-group <resource-group-name> --query [0].value
     ```
 
-1.  Replace the implementation of the `src/dapr/components/entrycam.yaml` file with code similar to below.
+1.  Replace the implementation of the `Resources/dapr/components/entrycam.yaml` file with code similar to below.
 
     ```yaml
     apiVersion: dapr.io/v1alpha1
@@ -384,7 +384,7 @@ Azure IoT Hub can be set up as a [MQTT queue](https://docs.microsoft.com/en-us/a
     - trafficcontrolservice
     ```
 
-1.  Replace the implementation of the `src/dapr/components/exitcam.yaml` file with code similar to above.
+1.  Replace the implementation of the `Resources/dapr/components/exitcam.yaml` file with code similar to above.
 
 1.  Re-run all the services.
 
