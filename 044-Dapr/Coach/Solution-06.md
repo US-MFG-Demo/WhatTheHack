@@ -8,7 +8,7 @@ You will add code to the TrafficControlService to leverage a Dapr input binding 
 
 <img src="../.img/Challenge-06/input-binding-operation.png" style="padding-top: 25px;" />
 
-## Step 1: Use the Dapr input binding in the TrafficControlService
+### Step 1: Use the Dapr input binding in the TrafficControlService
 
 Start by inspecting vehicle entry and exit methods:
 
@@ -18,7 +18,7 @@ Start by inspecting vehicle entry and exit methods:
 
 And you're done! That's right, you don't need to change anything in order to use an input binding. The binding will invoke the web API operations across the TrafficControlService based on the binding name specified in the component configuration. The TrafficControlService will have no knowledge of Dapr binding. It's just another HTTP call.
 
-## Step 2: Run the Mosquitto MQTT broker
+### Step 2: Run the Mosquitto MQTT broker
 
 You'll use [Mosquitto](https://mosquitto.org/), a lightweight MQTT broker, as the MQTT broker between the Simulation and TrafficControlService. You'll run Mosquitto from a Docker container.
 
@@ -73,7 +73,7 @@ Keep in mind that once you remove, it's gone. You'll need to start it again with
 >
 > You can also start all the infrastructural containers at once (also for assignments to come) with the `Resources/Infrastructure/start-all.ps1` script.
 
-## Step 3: Configure the input binding
+### Step 3: Configure the input binding
 
 In this step you will add two Dapr binding component configuration files to the custom components folder you created in Assignment 3.
 
@@ -135,7 +135,7 @@ Next, create an input binding for the `/exitcam` operation:
 
 Now with input bindings configured, it's time to change the Camera Simulation so it'll send MQTT messages to Mosquitto.
 
-## Step 4: Send MQTT messages from the Camera Simulation
+### Step 4: Send MQTT messages from the Camera Simulation
 
 In this step, you'll change the Camera Simulation so it sends MQTT messages instead of HTTP requests:
 
@@ -228,7 +228,7 @@ If you see any warnings or errors, review the previous steps to make sure the co
 
 Now you're ready to test the application.
 
-## Step 5: Test the application
+### Step 5: Test the application
 
 You're going to start all the services now. You specify the custom components folder you've created on the command-line using the `--components-path` flag. By doing so, Dapr will use the configuration files inside the folder:
 
