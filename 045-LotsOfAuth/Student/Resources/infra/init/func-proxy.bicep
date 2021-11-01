@@ -3,6 +3,10 @@ param appServicePlanName string
 param functionAppName string
 param logAnalyticsWorkspaceName string
 param storageAccountName string
+param computationProxyFunctionAppName string
+param financialProxyFunctionAppName string
+param hrSystemProxyFunctionAppName string
+param weatherProxyFunctionAppName string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
   name: appServicePlanName
@@ -14,6 +18,22 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' existing 
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: appInsightsName
+}
+
+resource computationProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: computationProxyFunctionAppName
+}
+
+resource financialProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: financialProxyFunctionAppName
+}
+
+resource hrSystemProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: hrSystemProxyFunctionAppName
+}
+
+resource weatherProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: weatherProxyFunctionAppName
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
@@ -47,6 +67,22 @@ resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'dotnet'
+        }
+        {
+          name: 'COMPUTATION_PROXY_URL'
+          value: 'https://${computationProxyFunctionApp.properties.defaultHostName}'
+        }
+        {
+          name: 'FINANCIAL_PROXY_URL'
+          value: 'https://${financialProxyFunctionApp.properties.defaultHostName}'
+        }
+        {
+          name: 'HR_SYSTEM_PROXY_URL'
+          value: 'https://${hrSystemProxyFunctionApp.properties.defaultHostName}'
+        }
+        {
+          name: 'WEATHER_PROXY_URL'
+          value: 'https://${weatherProxyFunctionApp.properties.defaultHostName}'
         }
       ]
     }

@@ -19,7 +19,6 @@ var functionAppNames = [
   hrSystemProxyFunctionAppName
   computationFunctionAppName
   computationProxyFunctionAppName
-  proxyFunctionAppName
 ]
 
 module funcDeployment 'func.bicep' = [for functionAppName in functionAppNames: {
@@ -32,3 +31,21 @@ module funcDeployment 'func.bicep' = [for functionAppName in functionAppNames: {
     storageAccountName: storageAccountName
   }
 }]
+
+module funcProxyDeployment 'func-proxy.bicep' = {
+  name: 'funcProxyDeployment'
+  dependsOn: [
+    funcDeployment
+  ]
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName
+    computationProxyFunctionAppName: computationProxyFunctionAppName
+    financialProxyFunctionAppName: financialProxyFunctionAppName
+    functionAppName: proxyFunctionAppName
+    hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+    weatherProxyFunctionAppName: weatherProxyFunctionAppName
+  }
+}
