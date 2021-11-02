@@ -3,6 +3,8 @@ param appServicePlanName string
 param functionAppName string
 param logAnalyticsWorkspaceName string
 param storageAccountName string
+param keyVaultName string
+param financialCertificateName string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
   name: appServicePlanName
@@ -47,6 +49,14 @@ resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'dotnet'
+        }
+        {
+          name: 'KEYVAULT_NAME'
+          value: keyVaultName
+        }
+        {
+          name: 'FINANCIAL_CERTIFICATE_NAME'
+          value: financialCertificateName
         }
       ]
     }

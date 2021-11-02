@@ -19,6 +19,12 @@
     },
     "subscriptionKeyName": {
       "value": "subscriptionKey"
+    },
+    "financialCertificateThumbprintKeyName": {
+      "value": "financialCertificateThumbprint"
+    },
+    "financialCertificateName": {
+      "value": "financialCertificate"
     }
   }
 }

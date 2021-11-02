@@ -2,6 +2,8 @@ param appInsightsName string
 param appServiceName string
 param appServicePlanName string
 param logAnalyticsWorkspaceName string
+param keyVaultName string
+param certificateThumbprintKeyName string
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: appInsightsName
@@ -40,6 +42,10 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
         {
           name: 'XDT_MicrosoftApplicationInsights_Mode'
           value: 'default'
+        }
+        {
+          name: 'CERTIFICATE_THUMBPRINT'
+          value: '@Microsoft.KeyVault(ValutName=${keyVaultName};SecretName=${certificateThumbprintKeyName})'
         }
       ]
     }

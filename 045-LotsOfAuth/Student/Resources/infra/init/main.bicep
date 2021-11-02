@@ -6,6 +6,8 @@ param location string
 param subscriptionKeyName string
 @secure()
 param subscriptionKeyValue string
+param financialCertificateThumbprintKeyName string
+param financialCertificateName string
 
 var adminAppServiceName = 'app-admin-${longName}'
 var longName = '${appName}-${location}-${environment}'
@@ -77,6 +79,7 @@ module functionDeployment 'funcs.bicep' = {
     subscriptionKeyName: subscriptionKeyName
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
+    financialCertificateName: financialCertificateName
   }
 }
 
@@ -88,6 +91,8 @@ module appServiceDeployment 'appServices.bicep' = {
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     adminAppServiceName: adminAppServiceName
     financialAppServiceName: financialAppServiceName
+    keyVaultName: keyVaultName
+    certificateThumbprintKeyName: financialCertificateThumbprintKeyName
   }
 }
 

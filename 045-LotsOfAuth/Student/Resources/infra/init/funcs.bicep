@@ -12,6 +12,7 @@ param storageAccountName string
 param subscriptionKeyName string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
+param financialCertificateName string
 
 module funcFinancialProxyFunctionAppDeployment 'func-financial-proxy.bicep' = {
   name: '${financialProxyFunctionAppName}Deployment'
@@ -21,6 +22,8 @@ module funcFinancialProxyFunctionAppDeployment 'func-financial-proxy.bicep' = {
     functionAppName: financialProxyFunctionAppName
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     storageAccountName: storageAccountName
+    keyVaultName: keyVaultName
+    financialCertificateName: financialCertificateName
   }
 }
 
