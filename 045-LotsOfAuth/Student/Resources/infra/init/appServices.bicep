@@ -4,17 +4,22 @@ param appServicePlanName string
 param financialAppServiceName string
 param logAnalyticsWorkspaceName string
 
-var appServiceNames = [
-  adminAppServiceName
-  financialAppServiceName
-]
-
-module appServiceDeployment 'appService.bicep' = [for appServiceName in appServiceNames: {
-  name: '${appServiceName}Deployment'
+module appServiceFinancialDeployment 'appService-financial.bicep' = {
+  name: '${financialAppServiceName}Deployment'
   params: {
     appInsightsName: appInsightsName
+    appServiceName: financialAppServiceName
     appServicePlanName: appServicePlanName
-    appServiceName: appServiceName
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
   }
-}]
+}
+
+module appServiceAdminDeployment 'appService-admin.bicep' = {
+  name: '${adminAppServiceName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServiceName: adminAppServiceName
+    appServicePlanName: appServicePlanName 
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+  }
+}
