@@ -13,24 +13,66 @@ param subscriptionKeyName string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
 
-var functionAppNames = [
-  financialProxyFunctionAppName
-  hrSystemFunctionAppName
-  hrSystemProxyFunctionAppName
-  computationFunctionAppName
-  computationProxyFunctionAppName
-]
-
-module funcDeployment 'func.bicep' = [for functionAppName in functionAppNames: {
-  name: '${functionAppName}Deployment'
+module funcFinancialProxyFunctionAppDeployment 'func-financial-proxy.bicep' = {
+  name: '${financialProxyFunctionAppName}Deployment'
   params: {
     appInsightsName: appInsightsName
     appServicePlanName: appServicePlanName
-    functionAppName: functionAppName
+    functionAppName: financialProxyFunctionAppName
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     storageAccountName: storageAccountName
   }
-}]
+}
+
+module funcComputationDeployment 'func-computation.bicep' = {
+  name: '${computationFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName 
+    functionAppName: computationFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+  }
+}
+
+module funcComputationProxyDeployment 'func-computation-proxy.bicep' = {
+  name: '${hrSystemProxyFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName 
+    functionAppName: hrSystemProxyFunctionAppName
+    computationFunctionAppName: computationFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+  }
+}
+
+module funcHrSystemDeployment 'func-hrSystem.bicep' = {
+  name: '${hrSystemFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName 
+    functionAppName: hrSystemFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+  }
+}
+
+module funcHrSystemProxyDeployment 'func-hrSystem-proxy.bicep' = {
+  name: '${hrSystemProxyFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName 
+    functionAppName: hrSystemProxyFunctionAppName
+    hrSystemFunctionAppName: hrSystemFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    storageAccountName: storageAccountName
+  }
+}
 
 module funcWeatherDeployment 'func-weather.bicep' = {
   name: '${weatherFunctionAppName}Deployment'
@@ -64,7 +106,13 @@ module funcWeatherProxyDeployment 'func-weather-proxy.bicep' = {
 module funcProxyDeployment 'func-proxy.bicep' = {
   name: 'funcProxyDeployment'
   dependsOn: [
-    funcDeployment
+    funcFinancialProxyFunctionAppDeployment
+    funcComputationDeployment
+    funcComputationProxyDeployment
+    funcHrSystemDeployment
+    funcHrSystemProxyDeployment
+    funcWeatherDeployment
+    funcWeatherProxyDeployment
   ]
   params: {
     appInsightsName: appInsightsName
