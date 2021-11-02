@@ -9,39 +9,34 @@ using Microsoft.Identity.Web.Resource;
 
 namespace app_financial.Controllers
 {
+    public class FinancialData {
+      public int DailyIncome { get; set; }
+      public int DailyProfit { get; set; }
+    }
+
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class FinancialController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private Random random;
+        private readonly ILogger<FinancialController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        // The Web API will only accept tokens 1) for users, and 2) having the "access_as_user" scope for this API
-        static readonly string[] scopeRequiredByApi = new string[] { "access_as_user" };
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public FinancialController(ILogger<FinancialController> logger)
         {
             _logger = logger;
+            random = new Random();
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public FinancialData Get()
         {
-            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
+          FinancialData financialData = new FinancialData{
+            DailyIncome = random.Next(0, 1000000)
+          };
+          financialData.DailyProfit = random.Next(0, financialData.DailyIncome);
 
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+          return financialData;
         }
     }
 }

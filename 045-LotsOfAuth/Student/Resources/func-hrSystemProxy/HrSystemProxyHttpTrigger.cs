@@ -6,10 +6,11 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Microsoft.Identity.Client;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.Http.Headers;
+using Microsoft.Identity.Client;
+using System.Linq;
 
 namespace func_hrSystemProxy
 {
@@ -23,6 +24,7 @@ namespace func_hrSystemProxy
     public class HrSystemProxyHttpTrigger
     {
       IConfidentialClientApplication confidentialClientApplication;
+      HttpClient client;
         public HrSystemProxyHttpTrigger() {
           ConfidentialClientApplicationOptions confidentialClientApplicationOptions = new ConfidentialClientApplicationOptions(){
             Instance = Environment.GetEnvironmentVariable("AzureAd__Instance"),
@@ -32,21 +34,23 @@ namespace func_hrSystemProxy
           };
           confidentialClientApplication = ConfidentialClientApplicationBuilder.CreateWithApplicationOptions(confidentialClientApplicationOptions)
             .Build();
+            client = new HttpClient();
         }
         [FunctionName("user")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var accessToken = confidentialClientApplication.AcquireTokenOnBehalfOf("", req.HttpContext.User);
+            var result = await confidentialClientApplication.AcquireTokenOnBehalfOf(new string[]{"access_as_user"}, 
+              new UserAssertion(req.HttpContext.User.Identities.First().BootstrapContext.ToString(), 
+                "urn:ietf:params:oauth:grant-type:jwt-bearer")).ExecuteAsync();
 
             UserData returnData;
 
-            using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage()) {
-              httpRequestMessage.Headers.Authorization = new AuthenticationHeader("Bearer", accessToken);
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+            returnData = await client.GetFromJsonAsync<UserData>($"{Environment.GetEnvironmentVariable("HR_SYSTEM_API_URL")}/api/user");
 
-              returnData = await confidentialClientApplication.GetFromJsonAsync<UserData>($"{Environment.GetEnvironmentVariable("HR_SYSTEM_API_URL")}/api/user");
-            }
             return new OkObjectResult(returnData);
         }
     }
