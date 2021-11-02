@@ -7,29 +7,47 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Identity.Client;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace func_hrSystemProxy
 {
-    public static class HrSystemProxyHttpTrigger
+  public class UserData {
+    public int UserId { get; set; }
+
+    public string Username { get; set; }
+    public int Salary { get; set; }
+
+  }
+    public class HrSystemProxyHttpTrigger
     {
-        [FunctionName("HrSystemProxyHttpTrigger")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+      IConfidentialClientApplication confidentialClientApplication;
+        public HrSystemProxyHttpTrigger() {
+          ConfidentialClientApplicationOptions confidentialClientApplicationOptions = new ConfidentialClientApplicationOptions(){
+            Instance = Environment.GetEnvironmentVariable("AzureAd__Instance"),
+            TenantId = Environment.GetEnvironmentVariable("AzureAd__TenantId"),
+            ClientId = Environment.GetEnvironmentVariable("AzureAd__ClientId"),
+            ClientSecret = Environment.GetEnvironmentVariable("AzureAd__ClientSecret")
+          };
+          confidentialClientApplication = ConfidentialClientApplicationBuilder.CreateWithApplicationOptions(confidentialClientApplicationOptions)
+            .Build();
+        }
+        [FunctionName("user")]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var accessToken = confidentialClientApplication.AcquireTokenOnBehalfOf("", req.HttpContext.User);
 
-            string name = req.Query["name"];
+            UserData returnData;
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage()) {
+              httpRequestMessage.Headers.Authorization = new AuthenticationHeader("Bearer", accessToken);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+              returnData = await confidentialClientApplication.GetFromJsonAsync<UserData>($"{Environment.GetEnvironmentVariable("HR_SYSTEM_API_URL")}/api/user");
+            }
+            return new OkObjectResult(returnData);
         }
     }
 }
