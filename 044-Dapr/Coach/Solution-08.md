@@ -19,8 +19,8 @@ To complete this assignment, you must reach the following goals:
 
 By default, Dapr sidecars run on port 3500 when deployed to AKS. This means you will need to change the port numbers in the FineCollectionService & TrafficControlService to port 3500 for the calls to Dapr.
 
-- src/FineCollectionService/Proxies/VehicleRegistrationService.cs
-- src/TrafficControlService/Controllers/TrafficController.cs
+- Resources/FineCollectionService/Proxies/VehicleRegistrationService.cs
+- Resources/TrafficControlService/Controllers/TrafficController.cs
 
 ### Step 2: Update the Dapr secrets configuration file to pull secrets from Azure KeyVault in AKS
 
@@ -44,7 +44,7 @@ By default, Dapr sidecars run on port 3500 when deployed to AKS. This means you 
     kubectl create secret generic "<service-principal-name>" --from-file="<service-principal-name>"="<pfx-certificate-file-fully-qualified-local-path>" -n dapr-trafficcontrol
     ```
 
-1.  Update the ```src/dapr/components/secrets-file.yaml``` with the Azure KeyVault configuration values. You will need to customize the **KeyVault name**, **tenant ID**, **client ID**, **resource ID**.
+1.  Update the ```Resources/dapr/components/secrets-file.yaml``` with the Azure KeyVault configuration values. You will need to customize the **KeyVault name**, **tenant ID**, **client ID**, **resource ID**.
 
     ```yaml
     apiVersion: dapr.io/v1alpha1
@@ -76,19 +76,19 @@ By default, Dapr sidecars run on port 3500 when deployed to AKS. This means you 
 
 You will need to build these services, create a Docker container image that has this source code baked into it and then upload to an Azure Container Registry. The easiest way to do that is to use [ACR tasks](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview).
 
-1. 	Navigate to the `src/VehicleRegistrationService` directory & use the Azure Container Registry task to build your image from source.
+1. 	Navigate to the `Resources/VehicleRegistrationService` directory & use the Azure Container Registry task to build your image from source.
 
     ```shell
     az acr build --registry <container-registry-name> --image vehicleregistrationservice:assignment08 .
     ```
 
-1. 	Navigate to the `src/TrafficControlService` directory & use the Azure Container Registry task to build your image from source.
+1. 	Navigate to the `Resources/TrafficControlService` directory & use the Azure Container Registry task to build your image from source.
 
     ```shell
     az acr build --registry <container-registry-name> --image trafficcontrolservice:assignment08 .
     ```
 
-1. 	Navigate to the `src/FineCollectionService` directory & use the Azure Container Registry task to build your image from source.
+1. 	Navigate to the `Resources/FineCollectionService` directory & use the Azure Container Registry task to build your image from source.
   
     ```shell
     az acr build --registry <container-registry-name> --image trafficcontrolservice:assignment08 .		
@@ -98,7 +98,7 @@ You will need to build these services, create a Docker container image that has 
 
 Now that your container images have been uploaded to the Azure Container Registry, you can deploy these images to your Azure Kubernetes Service. Deployment spec files have been added to each service to make this easier. You will need to customize them to reference your container registry path & AKS ingress.
 
-1.	Open the `src/k8s/components/fine-collection-service.yaml` file and update the container registry name to be the one you have deployed.
+1.	Open the `Resources/k8s/components/fine-collection-service.yaml` file and update the container registry name to be the one you have deployed.
 
     ```yaml
     spec:
@@ -146,7 +146,7 @@ Now that your container images have been uploaded to the Azure Container Registr
 1. 	Deploy your new services to AKS. Navigate to the `src/k8s/components` directory and run the following:
 
     ```shell
-    cd src/dapr/components
+    cd Resources/dapr/components
     kubectl apply -k .
     ```
 
