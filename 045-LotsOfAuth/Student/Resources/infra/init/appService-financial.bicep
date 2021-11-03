@@ -37,6 +37,18 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
           value: appInsights.properties.ConnectionString
         }
         {
+          name: 'APPINSIGHTS_PROFILERFEATURE_VERSION'
+          value: '1.0.0'
+        }
+        {
+          name: 'APPINSIGHTS_SNAPSHOTFEATURE_VERSION'
+          value: '1.0.0'
+        }
+        {
+          name: 'DiagnosticServices_EXTENSION_VERSION'
+          value: '~3'
+        }
+        {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
           value: '~2'
         }
