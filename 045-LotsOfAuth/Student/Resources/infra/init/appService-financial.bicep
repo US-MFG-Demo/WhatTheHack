@@ -26,6 +26,7 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
     clientCertMode: 'Required'
     clientCertEnabled: true
     siteConfig: {
+      linuxFxVersion: 'DOTNETCORE|5.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
@@ -42,6 +43,10 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
         {
           name: 'XDT_MicrosoftApplicationInsights_Mode'
           value: 'default'
+        }
+        {
+          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
+          value: 'True'
         }
         {
           name: 'CERTIFICATE_THUMBPRINT'
