@@ -10,17 +10,17 @@ param financialCertificateThumbprintKeyName string
 param financialCertificateName string
 
 var adminAppServiceName = 'app-admin-${longName}'
-var longName = '${appName}-${location}-${environment}'
-var weatherFunctionAppName = 'func-weather-${longName}'
-var weatherProxyFunctionAppName = 'func-weatherProxy-${longName}'
+var computationFunctionAppName = 'func-computation-${longName}'
+var computationProxyFunctionAppName = 'func-computationProxy-${longName}'
 var financialAppServiceName = 'app-financial-${longName}'
 var financialProxyFunctionAppName = 'func-financialProxy-${longName}'
 var hrSystemFunctionAppName = 'func-hrSystem-${longName}'
 var hrSystemProxyFunctionAppName = 'func-hrSystemProxy-${longName}'
-var computationFunctionAppName = 'func-computation-${longName}'
-var computationProxyFunctionAppName = 'func-computationProxy-${longName}'
-var proxyFunctionAppName = 'func-proxy-${longName}'
 var keyVaultName = 'kv-${longName}'
+var longName = '${appName}-${location}-${environment}'
+var proxyFunctionAppName = 'func-proxy-${longName}'
+var weatherFunctionAppName = 'func-weather-${longName}'
+var weatherProxyFunctionAppName = 'func-weatherProxy-${longName}'
 
 module loggingDeployment 'logging.bicep' = {
   name: 'loggingDeployment'
@@ -69,6 +69,7 @@ module functionDeployment 'funcs.bicep' = {
     appServicePlanName: appServicePlanDeployment.outputs.funcAppServicePlanName
     computationFunctionAppName: computationFunctionAppName
     computationProxyFunctionAppName: computationProxyFunctionAppName
+    financialCertificateName: financialCertificateName
     financialProxyFunctionAppName: financialProxyFunctionAppName
     hrSystemFunctionAppName: hrSystemFunctionAppName
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
@@ -79,20 +80,19 @@ module functionDeployment 'funcs.bicep' = {
     subscriptionKeyName: subscriptionKeyName
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
-    financialCertificateName: financialCertificateName
   }
 }
 
 module appServiceDeployment 'appServices.bicep' = {
   name: 'appServicesDeployment'
   params: {
+    adminAppServiceName: adminAppServiceName
     appInsightsName: loggingDeployment.outputs.appInsightsName
     appServicePlanName: appServicePlanDeployment.outputs.webAppServicePlanName
-    logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
-    adminAppServiceName: adminAppServiceName
+    certificateThumbprintKeyName: financialCertificateThumbprintKeyName
     financialAppServiceName: financialAppServiceName
     keyVaultName: keyVaultName
-    certificateThumbprintKeyName: financialCertificateThumbprintKeyName
+    logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
   }
 }
 
@@ -120,8 +120,8 @@ module keyVaultDeployment 'keyVault.bicep' = {
     financialProxyFunctionAppName: financialAppServiceName
     hrSystemFunctionAppName: hrSystemFunctionAppName
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
-    logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     proxyFunctionAppName: proxyFunctionAppName  
     subscriptionKeyName: subscriptionKeyName
     subscriptionKeyValue: subscriptionKeyValue
@@ -130,14 +130,14 @@ module keyVaultDeployment 'keyVault.bicep' = {
   }
 }
 
-module weatherFunctionAppKeyDeployment 'func-weather-key.bicep' = {
-  name: 'weatherFunctionAppKeyDeployment'
-  params: {
-    functionAppName: weatherFunctionAppName
-    keyVaultName: keyVaultDeployment.outputs.keyVaultName
-    subscriptionKeyValue: subscriptionKeyValue
-  }
-}
+// module weatherFunctionAppKeyDeployment 'func-weather-key.bicep' = {
+//   name: 'weatherFunctionAppKeyDeployment'
+//   params: {
+//     functionAppName: weatherFunctionAppName
+//     keyVaultName: keyVaultDeployment.outputs.keyVaultName
+//     subscriptionKeyValue: subscriptionKeyValue
+//   }
+// }
 
 output storageAccountName string = storageDeployment.outputs.storageAccountName
 output containerRegistryName string = containerRegistryDeployment.outputs.containerRegistryName

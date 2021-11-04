@@ -22,7 +22,6 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
     tier: 'Basic'
   }
   properties: {
-    reserved: true
   }
 }
 

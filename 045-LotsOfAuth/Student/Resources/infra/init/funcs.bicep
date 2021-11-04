@@ -40,11 +40,11 @@ module funcComputationDeployment 'func-computation.bicep' = {
 }
 
 module funcComputationProxyDeployment 'func-computation-proxy.bicep' = {
-  name: '${hrSystemProxyFunctionAppName}Deployment'
+  name: '${computationProxyFunctionAppName}Deployment'
   params: {
     appInsightsName: appInsightsName
     appServicePlanName: appServicePlanName 
-    functionAppName: hrSystemProxyFunctionAppName
+    functionAppName: computationProxyFunctionAppName 
     computationFunctionAppName: computationFunctionAppName
     keyVaultName: keyVaultName
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName

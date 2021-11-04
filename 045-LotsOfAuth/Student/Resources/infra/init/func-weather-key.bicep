@@ -11,7 +11,10 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' existing = {
   name: keyVaultName
 }
 
-resource functionAppKey 'Microsoft.Web/sites/functions/keys@2021-02-01' = {
-  name: '${weatherFunctionApp.name}/weather/default'
-  value: subscriptionKeyValue
+resource functionAppKey 'Microsoft.Web/sites/host/functionKeys@2018-11-01' = {
+  name: '${weatherFunctionApp.name}/default/sharedAccessKey'
+  properties: {
+    name: 'sharedAccessKey'
+    value: subscriptionKeyValue
+  }
 }

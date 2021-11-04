@@ -26,7 +26,6 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
     clientCertMode: 'Required'
     clientCertEnabled: true
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|5.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
@@ -61,8 +60,8 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
           value: 'True'
         }
         {
-          name: 'CERTIFICATE_THUMBPRINT'
-          value: '@Microsoft.KeyVault(ValutName=${keyVaultName};SecretName=${certificateThumbprintKeyName})'
+          name: 'FINANCIAL_CERTIFICATE_THUMBPRINT'
+          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${certificateThumbprintKeyName})'
         }
       ]
     }
