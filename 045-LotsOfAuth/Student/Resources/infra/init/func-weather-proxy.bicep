@@ -69,7 +69,7 @@ resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
         }
         {
           name: 'WEATHER_API_SUBSCRIPTION_KEY'
-          value: '@Microsoft.KeyVault(ValutName=${keyVaultName};SecretName=${subscriptionKeyName})'
+          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${subscriptionKeyName})'
         }
       ]
     }

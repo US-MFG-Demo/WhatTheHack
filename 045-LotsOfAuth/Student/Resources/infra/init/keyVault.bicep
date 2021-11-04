@@ -1,4 +1,6 @@
+param aadAdminObjectId string
 param adminAppServiceName string
+param appInsightsName string
 param computationFunctionAppName string
 param computationProxyFunctionAppName string
 param financialAppServiceName string
@@ -8,6 +10,7 @@ param hrSystemProxyFunctionAppName string
 param logAnalyticsWorkspaceName string
 param keyVaultName string
 param proxyFunctionAppName string
+param storageAccountName string
 param subscriptionKeyName string
 @secure()
 param subscriptionKeyValue string
@@ -68,11 +71,21 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
     accessPolicies: [
       {
         tenantId: subscription().tenantId
+        objectId: aadAdminObjectId
+        permissions: {
+          secrets: [
+            'all'
+          ]
+        }
+      }
+      {
+        tenantId: subscription().tenantId
         objectId: weatherFunctionApp.identity.principalId
         permissions: {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       }
@@ -204,5 +217,26 @@ resource diagnosticSettings 'Microsoft.Insights/diagnosticsettings@2017-05-01-pr
     ]
   }
 }
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' existing = {
+  name: storageAccountName
+}
+
+resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: appInsightsName
+}
+
+// resource weatherFunctionAppKeyVaultConfiguration 'Microsoft.Web/sites/config@2021-02-01' = {
+//   name: '${weatherFunctionApp.name}/appsettings'
+//   properties: {
+//     'AzureWebJobsStorage': 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(resourceId('Microsoft.Storage/storageAccounts', storageAccount.name), '2019-06-01').keys[0].value}'
+//     'AZURE_STORAGE_CONNECTION_STRING': 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(resourceId('Microsoft.Storage/storageAccounts', storageAccount.name), '2019-06-01').keys[0].value}'
+//     'APPINSIGHTS_INSTRUMENTATIONKEY': appInsights.properties.InstrumentationKey
+//     'FUNCTIONS_EXTENSION_VERSION': '~3'
+//     'FUNCTIONS_WORKER_RUNTIME': 'dotnet'
+//     'AzureWebJobsSecretStorageType': 'keyvault'
+//     'AzureWebJobsSecretStorageKeyVaultName': keyVault.name
+//   }
+// }
 
 output keyVaultName string = keyVault.name

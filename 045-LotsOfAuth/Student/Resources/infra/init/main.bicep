@@ -113,7 +113,9 @@ module keyVaultDeployment 'keyVault.bicep' = {
     functionDeployment
   ]
   params: {
+    aadAdminObjectId: aadAdminObjectId
     adminAppServiceName: adminAppServiceName
+    appInsightsName: loggingDeployment.outputs.appInsightsName
     computationFunctionAppName: computationFunctionAppName
     computationProxyFunctionAppName: computationProxyFunctionAppName
     financialAppServiceName: financialAppServiceName
@@ -122,22 +124,14 @@ module keyVaultDeployment 'keyVault.bicep' = {
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName
     keyVaultName: keyVaultName
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
-    proxyFunctionAppName: proxyFunctionAppName  
+    proxyFunctionAppName: proxyFunctionAppName
+    storageAccountName: storageDeployment.outputs.storageAccountName
     subscriptionKeyName: subscriptionKeyName
     subscriptionKeyValue: subscriptionKeyValue
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
   }
 }
-
-// module weatherFunctionAppKeyDeployment 'func-weather-key.bicep' = {
-//   name: 'weatherFunctionAppKeyDeployment'
-//   params: {
-//     functionAppName: weatherFunctionAppName
-//     keyVaultName: keyVaultDeployment.outputs.keyVaultName
-//     subscriptionKeyValue: subscriptionKeyValue
-//   }
-// }
 
 output storageAccountName string = storageDeployment.outputs.storageAccountName
 output containerRegistryName string = containerRegistryDeployment.outputs.containerRegistryName

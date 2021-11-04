@@ -18,7 +18,7 @@
       "value": "jordanbean@microsoft.com"
     },
     "subscriptionKeyName": {
-      "value": "subscriptionKey"
+      "value": "function--weather--default"
     },
     "financialCertificateThumbprintKeyName": {
       "value": "financialCertificateThumbprint"
