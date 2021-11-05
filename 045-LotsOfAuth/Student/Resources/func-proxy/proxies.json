@@ -24,6 +24,12 @@
         "route": "weather"
       },
       "backendUri": "https://%WEATHER_PROXY_URL%/api/weather"
+    },
+    "database": {
+      "matchCondition": {
+        "route": "database"
+      },
+      "backendUri": "https://%DATABASE_PROXY_URL%/api/database"
     }
   }
 }

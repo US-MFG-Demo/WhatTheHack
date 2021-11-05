@@ -4,14 +4,13 @@ param appName string
 param environment string
 param location string
 param subscriptionKeyName string
-@secure()
-param subscriptionKeyValue string
 param financialCertificateThumbprintKeyName string
 param financialCertificateName string
 
 var adminAppServiceName = 'app-admin-${longName}'
 var computationFunctionAppName = 'func-computation-${longName}'
 var computationProxyFunctionAppName = 'func-computationProxy-${longName}'
+var databaseProxyFunctionAppName = 'func-databaseProxy-${longName}'
 var financialAppServiceName = 'app-financial-${longName}'
 var financialProxyFunctionAppName = 'func-financialProxy-${longName}'
 var hrSystemFunctionAppName = 'func-hrSystem-${longName}'
@@ -69,6 +68,7 @@ module functionDeployment 'funcs.bicep' = {
     appServicePlanName: appServicePlanDeployment.outputs.funcAppServicePlanName
     computationFunctionAppName: computationFunctionAppName
     computationProxyFunctionAppName: computationProxyFunctionAppName
+    databaseProxyFunctionAppName: databaseProxyFunctionAppName
     financialCertificateName: financialCertificateName
     financialProxyFunctionAppName: financialProxyFunctionAppName
     hrSystemFunctionAppName: hrSystemFunctionAppName
@@ -76,6 +76,8 @@ module functionDeployment 'funcs.bicep' = {
     keyVaultName: keyVaultName
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     proxyFunctionAppName: proxyFunctionAppName
+    sqlDatabaseName: sqlDeployment.outputs.sqlDatabaseName
+    sqlServerName: sqlDeployment.outputs.sqlServerName
     storageAccountName: storageDeployment.outputs.storageAccountName
     subscriptionKeyName: subscriptionKeyName
     weatherFunctionAppName: weatherFunctionAppName
@@ -118,6 +120,7 @@ module keyVaultDeployment 'keyVault.bicep' = {
     appInsightsName: loggingDeployment.outputs.appInsightsName
     computationFunctionAppName: computationFunctionAppName
     computationProxyFunctionAppName: computationProxyFunctionAppName
+    databaseProxyFunctionAppName: databaseProxyFunctionAppName
     financialAppServiceName: financialAppServiceName
     financialProxyFunctionAppName: financialAppServiceName
     hrSystemFunctionAppName: hrSystemFunctionAppName
@@ -126,8 +129,6 @@ module keyVaultDeployment 'keyVault.bicep' = {
     logAnalyticsWorkspaceName: loggingDeployment.outputs.logAnalyticsWorkspaceName
     proxyFunctionAppName: proxyFunctionAppName
     storageAccountName: storageDeployment.outputs.storageAccountName
-    subscriptionKeyName: subscriptionKeyName
-    subscriptionKeyValue: subscriptionKeyValue
     weatherFunctionAppName: weatherFunctionAppName
     weatherProxyFunctionAppName: weatherProxyFunctionAppName
   }

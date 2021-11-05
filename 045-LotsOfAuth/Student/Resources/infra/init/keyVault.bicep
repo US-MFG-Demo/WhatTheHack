@@ -3,6 +3,7 @@ param adminAppServiceName string
 param appInsightsName string
 param computationFunctionAppName string
 param computationProxyFunctionAppName string
+param databaseProxyFunctionAppName string
 param financialAppServiceName string
 param financialProxyFunctionAppName string
 param hrSystemFunctionAppName string
@@ -11,9 +12,6 @@ param logAnalyticsWorkspaceName string
 param keyVaultName string
 param proxyFunctionAppName string
 param storageAccountName string
-param subscriptionKeyName string
-@secure()
-param subscriptionKeyValue string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
 
@@ -51,6 +49,10 @@ resource computationFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
 
 resource computationProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
   name: computationProxyFunctionAppName
+}
+
+resource databaseProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+  name: databaseProxyFunctionAppName
 }
 
 resource proxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
@@ -91,11 +93,23 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
       }
       {
         tenantId: subscription().tenantId
+        objectId: databaseProxyFunctionApp.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+            'set'
+          ]
+        }
+      }
+      {
+        tenantId: subscription().tenantId
         objectId: weatherProxyFunctionApp.identity.principalId
         permissions: {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       } 
@@ -106,6 +120,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       } 
@@ -116,6 +131,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       } 
@@ -126,6 +142,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       } 
@@ -136,6 +153,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       } 
@@ -146,6 +164,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       }
@@ -156,6 +175,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       }
@@ -166,6 +186,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       }
@@ -176,18 +197,12 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
           secrets: [
             'get'
             'list'
+            'set'
           ]
         }
       }
     ]
   }  
-}
-
-resource keyVaultSubscriptionKeySecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
-  name: '${keyVault.name}/${subscriptionKeyName}'
-  properties: {
-    value: subscriptionKeyValue
-  }
 }
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {

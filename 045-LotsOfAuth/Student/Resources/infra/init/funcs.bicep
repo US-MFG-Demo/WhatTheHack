@@ -2,17 +2,35 @@ param appInsightsName string
 param appServicePlanName string
 param computationFunctionAppName string
 param computationProxyFunctionAppName string
+param databaseProxyFunctionAppName string
 param financialProxyFunctionAppName string
 param hrSystemFunctionAppName string
 param hrSystemProxyFunctionAppName string
 param keyVaultName string
 param logAnalyticsWorkspaceName string
 param proxyFunctionAppName string
+param sqlServerName string
+param sqlDatabaseName string
 param storageAccountName string
 param subscriptionKeyName string
 param weatherFunctionAppName string
 param weatherProxyFunctionAppName string
 param financialCertificateName string
+
+module funcDatabaseProxyFunctionAppDeployment 'func-database-proxy.bicep' = {
+  name: '${databaseProxyFunctionAppName}Deployment'
+  params: {
+    appInsightsName: appInsightsName
+    appServicePlanName: appServicePlanName
+    functionAppName: databaseProxyFunctionAppName
+    keyVaultName: keyVaultName
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    sqlDatabaseName: sqlDatabaseName
+    sqlServerName: sqlServerName
+    storageAccountName: storageAccountName
+    subscriptionKeyName: subscriptionKeyName
+  }
+}
 
 module funcFinancialProxyFunctionAppDeployment 'func-financial-proxy.bicep' = {
   name: '${financialProxyFunctionAppName}Deployment'
@@ -112,6 +130,7 @@ module funcProxyDeployment 'func-proxy.bicep' = {
     funcFinancialProxyFunctionAppDeployment
     funcComputationDeployment
     funcComputationProxyDeployment
+    funcDatabaseProxyFunctionAppDeployment
     funcHrSystemDeployment
     funcHrSystemProxyDeployment
     funcWeatherDeployment
@@ -121,6 +140,7 @@ module funcProxyDeployment 'func-proxy.bicep' = {
     appInsightsName: appInsightsName
     appServicePlanName: appServicePlanName
     computationProxyFunctionAppName: computationProxyFunctionAppName
+    databaseProxyFunctionAppName: databaseProxyFunctionAppName
     financialProxyFunctionAppName: financialProxyFunctionAppName
     functionAppName: proxyFunctionAppName
     hrSystemProxyFunctionAppName: hrSystemProxyFunctionAppName

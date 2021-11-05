@@ -1,13 +1,12 @@
 param appInsightsName string
 param appServicePlanName string
 param functionAppName string
+param keyVaultName string
 param logAnalyticsWorkspaceName string
 param storageAccountName string
-param computationProxyFunctionAppName string
-param financialProxyFunctionAppName string
-param hrSystemProxyFunctionAppName string
-param weatherProxyFunctionAppName string
-param databaseProxyFunctionAppName string
+param subscriptionKeyName string
+param sqlServerName string
+param sqlDatabaseName string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
   name: appServicePlanName
@@ -21,24 +20,8 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: appInsightsName
 }
 
-resource computationProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: computationProxyFunctionAppName
-}
-
-resource financialProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: financialProxyFunctionAppName
-}
-
-resource hrSystemProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: hrSystemProxyFunctionAppName
-}
-
-resource weatherProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: weatherProxyFunctionAppName
-}
-
-resource databaseProxyFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: databaseProxyFunctionAppName
+resource sqlDatabase 'Microsoft.Sql/servers/databases@2021-05-01-preview' existing = {
+  name: '${sqlServerName}/${sqlDatabaseName}'
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
@@ -74,24 +57,19 @@ resource functionApp 'Microsoft.Web/sites@2021-01-15' = {
           value: 'dotnet'
         }
         {
-          name: 'COMPUTATION_PROXY_URL'
-          value: 'https://${computationProxyFunctionApp.properties.defaultHostName}'
+          name: 'AzureWebJobsSecretStorageType'
+          value: 'keyvault'
         }
         {
-          name: 'FINANCIAL_PROXY_URL'
-          value: 'https://${financialProxyFunctionApp.properties.defaultHostName}'
+          name: 'AzureWebJobsSecretStorageKeyVaultName'
+          value: keyVaultName
         }
+      ]
+      connectionStrings: [
         {
-          name: 'HR_SYSTEM_PROXY_URL'
-          value: 'https://${hrSystemProxyFunctionApp.properties.defaultHostName}'
-        }
-        {
-          name: 'WEATHER_PROXY_URL'
-          value: 'https://${weatherProxyFunctionApp.properties.defaultHostName}'
-        }
-        {
-          name: 'DATABASE_PROXY_URL'
-          value: 'https://${databaseProxyFunctionApp.properties.defaultHostName}'
+          name: 'AZURE_SQL'
+          type: 'SQLAzure'
+          connectionString: 'Server=tcp:${sqlServerName}${environment().suffixes.sqlServerHostname};Authentication=Active Directory Device Code Flow; Database=${sqlDatabaseName};'
         }
       ]
     }
