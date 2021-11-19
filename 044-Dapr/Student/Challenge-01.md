@@ -8,7 +8,11 @@ In this assignment, you'll run the Traffic Control application to ensure that ev
 
 ## Description
 
-As you saw in the beginning, the hackathon assignments are built upon an existing microservice app entitled *Traffic Control*. Using Visual Studio Code, you'll invoke each of the 4 microservices. Keep in mind that you'll be running the application ***without*** Dapr technology. As you work through the challenges, you'll add Dapr Building Blocks and Components,  step-by-step.
+As mentioned in the introduction, the hackathon assignments are built upon an existing microservice app entitled the ***Traffic Control Application***. To start, you'll test the initial application to ensure that your environment is configured correctly. You'll use Visual Studio Code to start each of the 4 microservices as shown below:
+
+<img src="../.img/Challenge-01/services.png" style="zoom: 75%;padding-top: 50px;" />
+
+Keep in mind that you'll be running the application ***without*** Dapr technology. As you work through the challenges, you'll add Dapr Building Blocks and Components, step-by-step. Figure depicts the services.
 
 - Start by running the **Vehicle Registration** microservice. It exposes a single endpoint that listens for requests for vehicle and owner information.
 
@@ -17,7 +21,7 @@ As you saw in the beginning, the hackathon assignments are built upon an existin
 - Then, run the **Traffic Control** service. It exposes entry and exit endpoints that capture a vehicle's a speed. When a motorist exceeds the speed limit, Traffic Control will call the Fine Collection service.
 - Finally, run the **Simulation** service. It simulates passing cars at varying speeds. It exposes entry and exit cameras that photograph the license plate of each vehicle. The telemetry is sent to the Traffic Control service.
 
-> The Camera Simulation service is implemented as a Console application. The other services are implemented as API applications.
+> The Camera Simulation service is implemented as a Console application, the other services as as API applications.
 
 ## Success Criteria
 
@@ -27,15 +31,17 @@ To complete this assignment, you must achieve the following goals:
 
 1. Observe activity flow from the simulation service all the way through the Fine Collection service.
 
+  > If you encounter an error, double-check to ensure that you have correctly installed all the [prerequisites](README.md#Prerequisites) for the workshop!  
+
 ## Tips
 
-- Run the services in the same instance of VS Code.
+- Run the services in VS Code.
 
-- Within VS Code, open a Terminal window for each service.
+- Within the same VS Code instances, open a Terminal window for each service.
 
 - Start each service using a ***dotnet run*** command.
 
-- To invoke a call from service to another, user the REST Client extension tool for VS Code.
+- To test the VehcileRegistration service, use the REST Client extension tool for VS Code.
 
   1. Open the file src/VehicleRegistrationService/test.http in VS Code using the (file) Explorer feature. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
 
