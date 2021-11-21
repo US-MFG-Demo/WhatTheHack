@@ -47,7 +47,7 @@ To complete this assignment, you must achieve the following goals:
     - Open the file `src/VehicleRegistrationService/test.http` using the (file) Explorer feature in VS Code. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
   
     - Click on Send request link, located immediately above the GET request, highlighted below with a red box, to send a request to the API:
-        <img src="../.img/Challenge-01/rest-client.png" />    
+        <img src="../.img/Challenge-01/rest-client.png" />
 
     - The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
 
@@ -71,7 +71,7 @@ To complete this assignment, you must achieve the following goals:
       ```
  
     - Finally, check the logging in the terminal window. It should look like this:
-      <img src="../.img/Challenge-01/logging-vehicleregistrationservice.png" />            
+      <img src="../.img/Challenge-01/logging-vehicleregistrationservice.png" />
  
 1. For the remaining service, start and check the logging in the corresponding terminal window.
 

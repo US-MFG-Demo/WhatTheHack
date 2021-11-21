@@ -1,8 +1,6 @@
-# Challenge 1 - Run the application - Coach's Guide
+# Assignment 1 - Run the application
 
-[< Previous Challenge](./Solution-00.md) - **[Home](../README.md)** - [Next Challenge>](./Solution-02.md)
-
-## Notes & Guidance
+## Assignment goals
 
 In this assignment, you'll run the Traffic Control application to make sure everything works correctly. At this point, you'll be running the microservice application **without** any Dapr technology. As you work through the lab assignments, you'll add Dapr technology step-by-step.
 
@@ -28,7 +26,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Click on `Send request` link, located immediately above the GET request in the file and highlighted below in a *red box*, to send a request to the API:
 
-   ![REST client](../.img/Challenge-01/rest-client.png)
+   ![REST client](img/rest-client.png)
 
 1. The response of the request will be shown in a separate window on the right. It should be a response with HTTP status code `200 OK` and the body should contain some random vehicle and owner-information:
 
@@ -51,7 +49,7 @@ Now you can test whether you can call the VehicleRegistrationService. You can do
 
 1. Check the logging in the terminal window. It should look like this:
 
-   ![VehicleRegistrationService logging](../.img/Challenge-01/logging-vehicleregistrationservice.png)
+   ![VehicleRegistrationService logging](img/logging-vehicleregistrationservice.png)
 
 At this point, the Vehicle Registration microservice is up and running correctly!
 
@@ -63,7 +61,7 @@ At this point, the Vehicle Registration microservice is up and running correctly
 
    > You can do this by using the hotkey (``Ctrl-` `` on Windows, ``Shift-Ctrl-` `` on macOS) or clicking on the `+` button in the terminal window title bar (shown in a red box):
 
-   > ![](../.img/Challenge-01/terminal-new.png)
+   > ![](img/terminal-new.png)
 
 1. In the terminal window, make sure the current folder is set to `src/FineCollectionService`.
 
@@ -77,7 +75,7 @@ At this point, the Vehicle Registration microservice is up and running correctly
 
 1. Check the logging in the terminal window. It should look like this:
 
-   ![FineCollectionService logging](../.img/Challenge-01/logging-finecollectionservice.png)
+   ![FineCollectionService logging](img/logging-finecollectionservice.png)
 
 At this point, both the Vehicle Registration and Fine Collection microservices are up and running.
 
@@ -97,16 +95,16 @@ At this point, both the Vehicle Registration and Fine Collection microservices a
 
 1. Check the logging in the terminal window. It should look like this:
 
-   ![TrafficControlService logging](../.img/Challenge-01/logging-trafficcontrolservice.png)
+   ![TrafficControlService logging](img/logging-trafficcontrolservice.png)
 
 1. Also inspect the logging of the FineCollectionService.
 
    > You can do this by selecting the prior terminal window using the dropdown in the title-bar of the terminal window:
-   ![](../.img/Challenge-01/terminal-dropdown.png)
+   ![](img/terminal-dropdown.png)
 
    You should see the speeding-violation being issued by the FineCollectionService:
 
-   ![FineCollectionService logging](../.img/Challenge-01/logging-finecollectionservice.png)
+   ![FineCollectionService logging](img/logging-finecollectionservice.png)
 
 At this point, the three core microservices, Vehicle Registration, Fine Collection, and Traffic Control are up and running.
 
@@ -120,7 +118,7 @@ You've tested the APIs directly by using a REST client. Now you're going to run 
 
 1. In the terminal window you should see something like this:
 
-   ![](../.img/Challenge-01/logging-simulation.png)
+   ![](img/logging-simulation.png)
 
 1. Also check the logging in the other Terminal windows. You should see all entry- and exit events and any speeding-violations that were detected in the logging.
 
@@ -131,5 +129,6 @@ Now we know the application runs correctly. It's time to start adding Dapr to th
 Make sure you stop all running processes and close all the terminal windows in VS Code before proceeding to the next assignment. Stopping a service or the simulation is done by pressing `Ctrl-C` in the terminal window. To close the terminal window, enter the `exit` command.
 
 > You can also close a terminal window by clicking on the trashcan icon in its title bar:
+> ![](img/terminal-trashcan.png)
 
-> ![](../.img/Challenge-01/terminal-trashcan.png)
+Go to [assignment 2](../Assignment02/README.md).
