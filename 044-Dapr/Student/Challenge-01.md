@@ -71,7 +71,7 @@ To complete this assignment, you must achieve the following goals:
       ```
  
     - Finally, check the logging in the terminal window. It should look like this:
-  <img src="../.img/Challenge-01/logging-vehicleregistrationservice.png" style="zoom: 50%;padding-top: 50px;" />            
+      <img src="../.img/Challenge-01/logging-vehicleregistrationservice.png" />            
  
 1. For the remaining service, start and check the logging in the corresponding terminal window.
 
