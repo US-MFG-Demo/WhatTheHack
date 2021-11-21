@@ -36,22 +36,22 @@ To complete this assignment, you must achieve the following goals:
 
 ## Tips
 
-- Run the services in VS Code.
+1. Run the services in VS Code.
 
-- Using a single VS Code instance, open a [Terminal window](https://code.visualstudio.com/docs/editor/integrated-terminal) for each service.
+1. Using a single VS Code instance, open a [Terminal window](https://code.visualstudio.com/docs/editor/integrated-terminal) for each service.
 
-- Start each service using a ***dotnet run*** command.
+1. Start each service using a ***dotnet run*** command.
 
-- Once running, test the VehcileRegistration service with the `REST Client extension tool` for VS Code.
+1. Once running, test the VehcileRegistration service with the `REST Client extension tool` for VS Code.
 
-    1. Open the file `src/VehicleRegistrationService/test.http` using the (file) Explorer feature in VS Code. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
+    - Open the file `src/VehicleRegistrationService/test.http` using the (file) Explorer feature in VS Code. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
   
-    1. Click on Send request link, located immediately above the GET request, highlighted below with a red box, to send a request to the API:
-<img src="../.img/Challenge-01/rest-client.png" style="zoom: 50%;padding-top: 50px;" />
-
-    1. The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
+    - Click on Send request link, located immediately above the GET request, highlighted below with a red box, to send a request to the API:
     
-    1. The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
+
+    - The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
+    
+    - The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
   
       ```json
       HTTP/1.1 200 OK
@@ -70,10 +70,10 @@ To complete this assignment, you must achieve the following goals:
       }
       ```
  
-    5. Finally, check the logging in the terminal window. It should look like this:
+    - Finally, check the logging in the terminal window. It should look like this:
   <img src="../.img/Challenge-01/logging-vehicleregistrationservice.png" style="zoom: 50%;padding-top: 50px;" />            
  
-- For the remaining service, start and check the logging in the corresponding terminal window.
+1. For the remaining service, start and check the logging in the corresponding terminal window.
 
 ## Learning Resources
 
