@@ -54,21 +54,20 @@ To complete this assignment, you must achieve the following goals:
     1. The response from the request will be shown in a separate window on the right. It should have an HTTP status code 200 OK and the body should contain some random vehicle and owner-information:
   
       ```json
-       HTTP/1.1 200 OK
-       Connection: close
-       Date: Mon, 01 Mar 2021 07:15:55 GMT
-       Content-Type: application/json; charset=utf-8
-       Server: Kestrel
-       Transfer-Encoding: chunked
+      HTTP/1.1 200 OK
+      Connection: close
+      Date: Mon, 01 Mar 2021 07:15:55 GMT
+      Content-Type: application/json; charset=utf-8
+      Server: Kestrel
+      Transfer-Encoding: chunked
        
-       {
+      {
            "vehicleId": "KZ-49-VX",
            "brand": "Toyota",
            "model": "Rav 4",
            "ownerName": "Angelena Fairbairn",
            "ownerEmail": "angelena.fairbairn@outlook.com"
-       }
-    
+      }
       ```
  
     5. Finally, check the logging in the terminal window. It should look like this:
