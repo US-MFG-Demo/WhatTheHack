@@ -8,7 +8,7 @@ In this assignment, you'll run the Traffic Control application to make sure ever
 
 ## Step 1. Run the VehicleRegistration service
 
-1. From the file explorer in VS Code, open the `src` folder.
+1. From the file explorer in VS Code, open the `Resources` folder.
 
    > Throughout the assignment you'll execute *all steps* in the **same instance** of VS Code.
 
@@ -16,7 +16,7 @@ In this assignment, you'll run the Traffic Control application to make sure ever
 
    > You can open it from the **Terminal** menu item on the top nav menu bar or by using the hotkey ``Ctrl-Shift-` `` (Windows) or ``Shift-Ctrl-` `` (macOS).
 
-1. In the terminal window, set your current folder to `src/VehicleRegistrationService`.
+1. In the terminal window, set your current folder to `Resources/VehicleRegistrationService`.
 
 1. Start the service by typing in the `dotnet run` command in the terminal window.
 
@@ -24,7 +24,7 @@ In this assignment, you'll run the Traffic Control application to make sure ever
 
 Now you can test whether you can call the VehicleRegistrationService. You can do this using a browser, CURL or some other HTTP client. But there is a convenient way of testing RESTful APIs directly from VS Code (using the REST Client extension VS Code):
 
-1. Open the file `src/VehicleRegistrationService/test.http` in VS Code using the (file) Explorer feature. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
+1. Open the file `Resources/VehicleRegistrationService/test.http` in VS Code using the (file) Explorer feature. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
 
 1. Click on `Send request` link, located immediately above the GET request in the file and highlighted below in a *red box*, to send a request to the API:
 
@@ -65,11 +65,11 @@ At this point, the Vehicle Registration microservice is up and running correctly
 
    > ![](../.img/Challenge-01/terminal-new.png)
 
-1. In the terminal window, make sure the current folder is set to `src/FineCollectionService`.
+1. In the terminal window, make sure the current folder is set to `Resources/FineCollectionService`.
 
 1. Start the service using `dotnet run` in the terminal window.
 
-1. Open the file `src/FineCollectionService/test.http` in the VS Code (file) Explorer. The request in this file simulates sending a detected speeding-violation to the FineCollectionService.
+1. Open the file `Resources/FineCollectionService/test.http` in the VS Code (file) Explorer. The request in this file simulates sending a detected speeding-violation to the FineCollectionService.
 
 1. Click on `Send request` in the file to send a request to the API.
 
@@ -85,7 +85,7 @@ At this point, both the Vehicle Registration and Fine Collection microservices a
 
 1. Make sure the VehicleRegistrationService and FineCollectionService are running (results of step 1 and 2).
 
-1. Open another **new** terminal window in VS Code and set the current folder to `src/TrafficControlService`.
+1. Open another **new** terminal window in VS Code and set the current folder to `Resources/TrafficControlService`.
 
 1. Start the service using `dotnet run`.
 
@@ -114,7 +114,7 @@ At this point, the three core microservices, Vehicle Registration, Fine Collecti
 
 You've tested the APIs directly by using a REST client. Now you're going to run the simulation microservice that simulates cars driving on the highway. The simulation will simulate 3 entry- and exit-cameras (one for each lane).
 
-1. Open a new terminal window in VS Code and set the current folder to `src/Simulation`.
+1. Open a new terminal window in VS Code and set the current folder to `Resources/Simulation`.
 
 1. Start the service using `dotnet run`.
 
