@@ -44,7 +44,7 @@ To complete this assignment, you must achieve the following goals:
 
 1. Once running, test the VehcileRegistration service with the `REST Client extension tool` for VS Code.
 
-    - Open the file `src/VehicleRegistrationService/test.http` using the (file) Explorer feature in VS Code. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
+    - Open the file `Resources/VehicleRegistrationService/test.http` using the (file) Explorer feature in VS Code. The request in this file simulates retrieving the vehicle and owner information for a certain license-number.
   
     - Click on Send request link, located immediately above the GET request, highlighted below with a red box, to send a request to the API:
         <img src="../.img/Challenge-01/rest-client.png" />
