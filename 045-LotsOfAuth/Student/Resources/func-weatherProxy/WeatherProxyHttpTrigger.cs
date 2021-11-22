@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net;
 
 namespace func_weatherProxy
 {
@@ -24,15 +25,22 @@ namespace func_weatherProxy
     public static class WeatherProxyHttpTrigger
     {
         private static HttpClient httpClient = new HttpClient();
-        [FunctionName("weather")]
+        [FunctionName("weatherProxy")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var response = await httpClient.GetFromJsonAsync<WeatherDayData>(
+          WeatherDayData weatherDayData = new WeatherDayData();
+          try {
+            weatherDayData = await httpClient.GetFromJsonAsync<WeatherDayData>(
               $"{Environment.GetEnvironmentVariable("WEATHER_API_URL")}/api/weather?code={Environment.GetEnvironmentVariable("WEATHER_API_SUBSCRIPTION_KEY")}");
+          } catch (HttpRequestException ex) {
+            if(ex.Message.Contains(HttpStatusCode.Unauthorized.ToString())) {
+              return new UnauthorizedResult();
+            }
+          }
 
-            return new OkObjectResult(response);
+            return new OkObjectResult(weatherDayData);
         }
     }
 }
