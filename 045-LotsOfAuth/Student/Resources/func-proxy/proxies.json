@@ -3,31 +3,31 @@
   "proxies": {
     "computation": {
       "matchCondition": {
-        "route": "computation"
+        "route": "/api/computation"
       },
       "backendUri": "https://%COMPUTATION_PROXY_URL%/api/computation"
     },
     "financial": {
       "matchCondition": {
-        "route": "financial"
+        "route": "/api/financial"
       },
       "backendUri": "https://%FINANCIAL_PROXY_URL%/api/financial"
     },
     "hr": {
       "matchCondition": {
-        "route": "hr"
+        "route": "/api/hr"
       },
       "backendUri": "https://%HR_SYSTEM_PROXY_URL%/api/user"
     },
     "weather": {
       "matchCondition": {
-        "route": "weather"
+        "route": "/api/weather"
       },
       "backendUri": "https://%WEATHER_PROXY_URL%/api/weather"
     },
     "database": {
       "matchCondition": {
-        "route": "database"
+        "route": "/api/database"
       },
       "backendUri": "https://%DATABASE_PROXY_URL%/api/database"
     }
