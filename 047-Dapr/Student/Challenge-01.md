@@ -75,6 +75,8 @@ To complete this assignment, you must achieve the following goals:
  
 1. For the remaining service, start and check the logging in the corresponding terminal window.
 
+![asdf](../Coach/Solution-00.md)
+
 ## Learning Resources
 
 - [Visual Studio Code](https://code.visualstudio.com/)
