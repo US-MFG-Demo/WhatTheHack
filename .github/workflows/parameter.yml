@@ -1,0 +1,16 @@
+name: Create new hack
+
+on:
+  workflow_dispatch:
+    inputs:
+      hackName:
+        description: The name of the hack you want to create (follow the naming convention xxx-YetAnotherHack)
+        required: true
+        default: xxx-YetAnotherHack
+jobs:
+  checklinks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Directory Structure
+        run: |
+           ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
