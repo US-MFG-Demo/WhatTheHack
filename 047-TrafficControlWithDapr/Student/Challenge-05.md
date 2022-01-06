@@ -1,4 +1,4 @@
-# Challenge 5 - Add a Dapr output binding
+# Challenge 5 - Dapr SMTP Output binding
 
 [< Previous Challenge](./Challenge-04.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-06.md)
 

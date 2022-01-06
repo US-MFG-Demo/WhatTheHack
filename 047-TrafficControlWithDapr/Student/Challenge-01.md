@@ -1,4 +1,4 @@
-# Challenge 1 - Run the application
+# Challenge 1 - Run the sample application
 
 [< Previous Challenge](./Challenge-00.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-02.md)
 

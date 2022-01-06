@@ -1,4 +1,4 @@
-# Challenge 8 - Deploy to Azure Kubernetes Service (AKS)
+# Challenge 8 - Dapr-enabled Services running in Azure Kubernetes Service (AKS)
 
 [< Previous Challenge](./Challenge-07.md) - **[Home](../README.md)**
 

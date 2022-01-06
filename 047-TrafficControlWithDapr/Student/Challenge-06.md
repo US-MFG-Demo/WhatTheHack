@@ -1,4 +1,4 @@
-# Challenge 6 - Add a Dapr input binding
+# Challenge 6 - Dapr MQTT Input Binding
 
 [< Previous Challenge](./Challenge-05.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-07.md)
 

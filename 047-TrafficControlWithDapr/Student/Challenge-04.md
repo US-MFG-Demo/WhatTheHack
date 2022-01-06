@@ -1,4 +1,4 @@
-# Challenge 4 - Add Dapr state management
+# Challenge 4 - Dapr Redis State Management
 
 [< Previous Challenge](./Challenge-03.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-05.md)
 

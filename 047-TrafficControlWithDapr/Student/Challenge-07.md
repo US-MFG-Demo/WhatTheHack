@@ -1,4 +1,4 @@
-# Challenge 7 - Add secrets management
+# Challenge 7 - Dapr Secrets Management
 
 [< Previous Challenge](./Challenge-06.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-08.md)
 

@@ -1,4 +1,4 @@
-# Challenge 2 - Add Dapr service invocation
+# Challenge 2 - Dapr Service Invocation
 
 [< Previous Challenge](./Challenge-01.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-03.md)
 
@@ -56,7 +56,7 @@ So how can you check whether or not the call to the `VehicleRegistrationService`
 
 ## Tips
 
-- Look in the `Resources` directory for the source code to get started.
+- Look in the `Resources.zip` package provided by your coach for the source code to get started.
 - Use the `dapr run` command to start up a Dapr sidecar & make sure and specify the `dotnet run` command at the end of the command to ensure that both services are started at the same time.
 - Refer to the [Prevent port collisions](./Resources/README.md#prevent-port-collisions) section to see what ports to use.
 

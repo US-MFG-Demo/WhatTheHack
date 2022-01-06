@@ -1,4 +1,4 @@
-# Challenge 0: Install tools and Azure pre-requisites
+# Challenge 0: Install local tools and Azure prerequisites
 
 **[Home](../README.md)** - [Next Challenge >](./Challenge-01.md)
 
@@ -11,7 +11,7 @@ In this challenge, you'll do the following:
   - Resource provisioning can take up to **25 minutes**, depending on the region used. Once you launch the script to create the Azure resources, review the application architecture & description with your coach.
 - Review sample application architecture.
 
-Your coach will have provided all the required code needed to complete this hack (look under the `Resources` directory) as part of a ZIP file.
+Your coach will provide you with a `Resources.zip` package file that contains the starting projects for the WhatTheHack. It contains a version of the services that use plain HTTP communication and store state in memory. With each challenge, you'll add a Dapr building block to enhance the application architecture.
 
 ### Install local prerequisites
   

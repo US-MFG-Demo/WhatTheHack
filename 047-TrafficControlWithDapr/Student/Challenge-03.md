@@ -1,4 +1,4 @@
-# Challenge 3 - Add pub/sub messaging
+# Challenge 3 - Dapr Pub/Sub Messaging
 
 [< Previous Challenge](./Challenge-02.md) - **[Home](../README.md)** - [Next Challenge >](./Challenge-04.md)
 
@@ -51,7 +51,7 @@ This challenge targets the operations labeled as **number 2** in the end-state s
   dapr run ... --components-path ../dapr/components dotnet run
   ```
 - Use Zipkin to observe the messages flow as specified in [Challenge-02](./Challenge-02#use-dapr-observability).
-- You might want to create the Azure resources first as sometimes it takes some times for the resources to be ready.
+- You might want to create the Azure resources first as it takes some time for the resources to be ready.
 
 ## Learning Resources
 
