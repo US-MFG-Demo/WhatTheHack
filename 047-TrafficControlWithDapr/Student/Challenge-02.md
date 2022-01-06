@@ -40,8 +40,8 @@ This challenge targets the operations labeled as **number 1** in the end-state s
 
 <img src="../images/Challenge-02/dapr-setup-assignment02.png" style="zoom: 67%;" />
 
-1.  Validate that the `VehicleRegistrationService` and `FineCollectionService` each run with a Dapr sidecar. You'll see both Dapr and application logging in the output.
-1.  Validate that the `FineCollectionService` uses the Dapr service invocation building block to call the `/vehicleinfo/{licensenumber}` endpoint on the `VehicleRegistrationService`. The HTTP call should be to the *Dapr* port number, not the *API* port number.
+- Validate that the `VehicleRegistrationService` and `FineCollectionService` each run with a Dapr sidecar. You'll see both Dapr and application logging in the output.
+- Validate that the `FineCollectionService` uses the Dapr service invocation building block to call the `/vehicleinfo/{licensenumber}` endpoint on the `VehicleRegistrationService`. The HTTP call should be to the *Dapr* port number, not the *API* port number.
 
 ### Use Dapr observability
 
