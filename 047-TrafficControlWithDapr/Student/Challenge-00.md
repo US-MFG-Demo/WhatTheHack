@@ -11,7 +11,7 @@ In this challenge, you'll do the following:
   - Resource provisioning can take up to **25 minutes**, depending on the region used. Once you launch the script to create the Azure resources, review the application architecture & description with your coach.
 - Review sample application architecture.
 
-Your coach will provide you with a `Resources.zip` package file that contains the starting projects for the WhatTheHack. It contains a version of the services that use plain HTTP communication and store state in memory. With each challenge, you'll add a Dapr building block to enhance the application architecture.
+Your coach will provide you with a `Resources.zip` package file that contains the starting projects for this hack. It contains a version of the services that use plain HTTP communication and store state in memory. With each challenge, you'll add a Dapr building block to enhance the application architecture.
 
 ### Install local prerequisites
   
@@ -291,7 +291,18 @@ Next, you'll create the Azure resources for the subsequent challenges using [Azu
 
 ### Review sample application architecture
 
-Spend some time with your coach reviewing the sample application architecture & services.
+Spend some time with your teammates reviewing the sample application architecture & services.
+
+The traffic-control application architecture consists of four microservices:
+
+![Services](../images/services.png)
+
+- The **Camera Simulation** is a .NET Core console application that will simulate passing cars.
+- The **Traffic Control Service** is an ASP.NET Core WebAPI application that offers entry and exit endpoints: `/entrycam` and `/exitcam`.
+- The **Fine Collection Service** is an ASP.NET Core WebAPI application that offers 1 endpoint: `/collectfine` for collecting fines.
+- The **Vehicle Registration Service** is an ASP.NET Core WebAPI application that offers 1 endpoint: `/getvehicleinfo/{license-number}` for retrieving vehicle and owner information of a vehicle.
+
+These services compose together to simulate a traffic control scenario.
 
 [Sample Application & Services Description](./Resources/README.md)
 
@@ -300,5 +311,3 @@ Spend some time with your coach reviewing the sample application architecture & 
 - Verify all local prerequisite tools are installed locally.
 - Verify all Azure resources have been successfully created.
 - Verify your understanding of the TrafficControl application architecture with your coach.
-
-## Learning Resources

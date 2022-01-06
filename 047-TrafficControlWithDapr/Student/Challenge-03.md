@@ -37,8 +37,10 @@ This challenge targets the operations labeled as **number 2** in the end-state s
 
 ## Tips
 
-- Use a `docker run` command to start up the RabbitMQ service.
-- Use the `rabbitmq:3-alpine` image from Docker Hub.
+- Start a container instance of a RabbitMQ message broker by entering the following command:
+   ```shell
+   docker run -d -p 5672:5672 -p 15672:15672 --name dtc-rabbitmq rabbitmq:3-management
+   ```
 - RabbitMQ provides a built-in dashboard that presents messaging activity, logging, and performance metrics. Open a browser and navigate to [http://localhost:15672/](http://localhost:15672/). Both the login name is `guest` and the password is `guest`. Shown below, the dashboard is helpful for troubleshooting RabbitMQ anomalies:
   <img src="../images/Challenge-03/rabbitmq-dashboard.png" style="padding-top: 25px;" />
 - Put your Dapr configuration files in the `Resources/dapr/components` directory (you will see some existing files related to the Azure Kubernetes Service deployment in [Challenge-08](./Challenge-08.md), you can ignore these for now and put your files here as well)
