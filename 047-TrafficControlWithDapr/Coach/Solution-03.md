@@ -284,10 +284,6 @@ time="2021-02-27T16:46:02.5989612+01:00" level=info msg="app is subscribed to th
 
 This log entry shows that Dapr queried the topic specified by the service `collectfine` and created a corresponding subscription.
 
-RabbitMQ provides a built-in dashboard that presents messaging activity, logging, and performance metrics. Open a browser and navigate to [http://localhost:15672/](http://localhost:15672/). Both the login name is `guest` and the password is `guest`. Shown below, the dashboard is helpful for troubleshooting RabbitMQ anomalies:
-
-    <img src="../images/Challenge-03/rabbitmq-dashboard.png" style="padding-top: 25px;" />
-
 ### Step 6: Receive messages in the `FineCollectionService` (*Programmatically*)
 
 The other approach to subscribing to pub/sub events is to do it programmatically. Dapr can call a service on the well known endpoint `/dapr/subscribe` to retrieve the subscriptions for that service. You will implement this endpoint and return the subscription for the `collectfine` topic.

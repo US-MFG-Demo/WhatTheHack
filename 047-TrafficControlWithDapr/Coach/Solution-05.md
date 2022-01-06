@@ -244,6 +244,12 @@ You should see the same logs as before. You can also view the fine notification 
     - finecollectionservice
     ```
 
+1.  Add the package to your project.
+
+    ```shell
+    dotnet add package Newtonsoft.Json
+    ```
+
 1.  Navigate to the `Resources/FineCollectionService` directory. Open the `Resources\FineCollectionService\Controllers\CollectionController.cs` file. Modify the **CollectFine** method to pass in a JSON object to the Logic App's HTTP endpoint. 
 
     Add the following to the using statements at the top of the file.
@@ -266,16 +272,10 @@ You should see the same logs as before. You can also view the fine notification 
     await daprClient.InvokeBindingAsync("sendmail", "create", jsonString);
     ```
 
-1.  Add the package to your project.
-
-    ```shell
-    dotnet add package Newtonsoft.Json
-    ```
-
 1.  Rebuild your `FineCollectionService`.
 
     ```shell
     dotnet build
     ```
 
-1.  Re-run all services and the simulation application. You should begin to see emails in your inbox for speeeding violations.
+1.  Re-run all services and the simulation application. You should begin to see emails in your inbox for speeding violations.
