@@ -57,7 +57,7 @@ So how can you check whether or not the call to the `VehicleRegistrationService`
 ## Tips
 
 - Look in the `Resources.zip` package provided by your coach for the source code to get started.
-- Use the `dapr run` command to start up a Dapr sidecar & make sure and specify the `dotnet run` command at the end of the command to ensure that both services are started at the same time.
+- Use the `dapr run` command to start up a Dapr sidecar & make sure and append the `dotnet run` command at the end of the command to ensure that both services are started at the same time.
 - Refer to the [Prevent port collisions](./Resources/README.md#prevent-port-collisions) section to see what ports to use.
 
 ## Learning Resources
