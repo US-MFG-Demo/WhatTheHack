@@ -8,9 +8,9 @@ In this challenge, you're going to add Dapr into the mix, using the Dapr **servi
 
 ## Description
 
-While asynchronous communication across microservices is favored, some operations require an immediate response. For such use cases, one microservice effectively *queries* another for a response that is needed to complete the operation. Such scenarios often implement synchronous calls between services.
+While asynchronous communication across microservices is favored, some operations require an immediate response. In these scenarios, one microservice invokes another for a response that is needed to complete an operation. Such scenarios implement synchronous calls between services.
 
-Operationally, it's important to not *hardcode* endpoints when implementing synchronous service calls. This practice becomes especially important in orchestrated environments, such as Kubernetes, where services are continually moved across cluster nodes and replaced with newer versions. The Dapr service invocation building block addresses service-to-service communication. Here is how it works:
+Operationally, it's important to expose "dynamic" endpoints when implementing synchronous service calls. This practice becomes especially important in orchestrated environments, such as Kubernetes, where services are continually moved across cluster nodes and replaced with newer versions. The Dapr service invocation building block addresses service-to-service communication. Here is how it works:
 
 <img src="../images/Challenge-02/service-invocation.png" style="zoom: 33%;padding-top: 50px;" />
 

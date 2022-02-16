@@ -33,10 +33,42 @@ namespace FineCollectionService.Controllers
             }
         }
 
+        // Programmatic approach to subscribing to pub/sub events
+        // Call well known endpoint to retrieve subscriptions for this service: /dapr/subscribe
+        [Route("/dapr/subscribe")]
+        [HttpGet()]
+        public object Subscribe()
+        {
+            return new object[]
+            {
+                new
+                {
+                    pubsubname = "pubsub",
+                    topic = "collectfine",
+                    route = "/collection"
+                }
+            };
+        }
+
+
+        // Dapr subscription.yaml file routes messages to "collectfine" route.
         [Route("collectfine")]
         [HttpPost()]
-        public async Task<ActionResult> CollectFine(SpeedingViolation speedingViolation)
+        // Legacy pre-Dapr included speedingViolation parameter
+        //public async Task<ActionResult> CollectFine(SpeedingViolation speedingViolation)
+        
+        public async Task<ActionResult> CollectFine([FromBody] System.Text.Json.JsonDocument cloudevent)
         {
+
+            // Extract and parse raw JSON from request body            
+            var data = cloudevent.RootElement.GetProperty("data");
+            var speedingViolation = new SpeedingViolation()
+            {
+                VehicleId = data.GetProperty("vehicleId").GetString(),
+                RoadId = data.GetProperty("roadId").GetString(),
+                Timestamp = data.GetProperty("timestamp").GetDateTime(),
+                ViolationInKmh = data.GetProperty("violationInKmh").GetInt32()
+            };
             decimal fine = _fineCalculator.CalculateFine(_fineCalculatorLicenseKey, speedingViolation.ViolationInKmh);
 
             // get owner info

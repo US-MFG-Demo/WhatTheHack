@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="dapr.aspnetcore" Version="1.6.0" />
+  </ItemGroup>
+
 </Project>

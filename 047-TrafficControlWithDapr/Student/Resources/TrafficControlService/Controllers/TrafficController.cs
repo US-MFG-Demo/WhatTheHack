@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Data.Common;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TrafficControlService.Events;
@@ -7,6 +8,7 @@ using TrafficControlService.Models;
 using System.Net.Http;
 using System.Net.Http.Json;
 using TrafficControlService.Repositories;
+using Dapr.Client;
 
 namespace TrafficControlService.Controllers
 {
@@ -59,7 +61,7 @@ namespace TrafficControlService.Controllers
         }
 
         [HttpPost("exitcam")]
-        public async Task<ActionResult> VehicleExit(VehicleRegistered msg)
+        public async Task<ActionResult> VehicleExit(VehicleRegistered msg, [FromServices]DaprClient daprClient)
         {
             try
             {
@@ -95,8 +97,19 @@ namespace TrafficControlService.Controllers
                     };
 
                     // publish speedingviolation
-                    var message = JsonContent.Create<SpeedingViolation>(speedingViolation);
-                    await _httpClient.PostAsync("http://localhost:6001/collectfine", message);
+                    await daprClient.PublishEventAsync("pubsub", "collectfine", "speedingViolation");
+
+
+                    // code for Dapr declarative approach to pub/sub
+                    // var message = JsonContent.Create<SpeedingViolation>(speedingViolation);
+                    // // Dapr call to sidecar on port 3600 using built-in HTTP API. 
+                    // // The sidecar is responsbile for publishing the message to a message broker.
+                    // await _httpClient.PostAsync("http://localhost:3600/v1.0/publish/collectfine", message);
+
+
+                    // legacy pre-Dapr code
+                    // note how endpoint of receiver is hardcoded
+                    //await _httpClient.PostAsync("http://localhost:6001/collectfine", message);
                 }
 
                 return Ok();

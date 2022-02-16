@@ -117,7 +117,7 @@ With the Dapr pub/sub building block, you use a [topic](https://docs.microsoft.c
 1. Dapr has a standard URI template for publishing a message using the Dapr Pub/Sub building block:
 
     ```csharp
-    http://localhost:<daprPort>/v1.0/publish/<pubsub-name>/<topic>
+    http://localhost:<daprPort>/v1.0/publish/<pubsub-component-name>/<topic>
     ```
 
 1. You'll use this template to publish a message from the TrafficControlService to the `collectfine` topic in the `FineCollectionService`. The new call will instruct Dapr to use the newly-created pub/sub component named `pubsub`. The Dapr sidecar for the TrafficControlService will run on HTTP port `3600`. Replace the hardcoded URL in the `VehicleExit` method with the following call to the Dapr pub/sub API:
