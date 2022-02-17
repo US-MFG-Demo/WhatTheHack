@@ -97,8 +97,7 @@ namespace TrafficControlService.Controllers
                     };
 
                     // publish speedingviolation
-                    await daprClient.PublishEventAsync("pubsub", "collectfine", "speedingViolation");
-
+                    await daprClient.PublishEventAsync("pubsub", "collectfine", speedingViolation);
 
                     // code for Dapr declarative approach to pub/sub
                     // var message = JsonContent.Create<SpeedingViolation>(speedingViolation);

@@ -24,6 +24,12 @@ namespace TrafficControlService
                 new DefaultSpeedingViolationCalculator("A12", 10, 100, 5));
 
             services.AddHttpClient();
+            
+            // Register DaprClient with .NET Core dependency injection container
+            // register the Dapr client with sidecar service for TrafficControlService
+            services.AddDaprClient(builder => builder
+                .UseHttpEndpoint($"http://localhost:3600")
+                .UseGrpcEndpoint($"http://localhost:60000"));
 
             services.AddSingleton<IVehicleStateRepository, InMemoryVehicleStateRepository>();
 
